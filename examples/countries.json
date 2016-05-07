@@ -1,0 +1,1504 @@
+{
+    "country": [
+        {
+            "countryName": "Andorra",
+            "population": "84000",
+            "continentName": "Europe",
+            "languages": "ca"
+        },
+        {
+            "countryName": "United Arab Emirates",
+            "population": "4975593",
+            "continentName": "Asia",
+            "languages": "ar-AE,fa,en,hi,ur"
+        },
+        {
+            "countryName": "Afghanistan",
+            "population": "29121286",
+            "continentName": "Asia",
+            "languages": "fa-AF,ps,uz-AF,tk"
+        },
+        {
+            "countryName": "Antigua and Barbuda",
+            "population": "86754",
+            "continentName": "North America",
+            "languages": "en-AG"
+        },
+        {
+            "countryName": "Anguilla",
+            "population": "13254",
+            "continentName": "North America",
+            "languages": "en-AI"
+        },
+        {
+            "countryName": "Albania",
+            "population": "2986952",
+            "continentName": "Europe",
+            "languages": "sq,el"
+        },
+        {
+            "countryName": "Armenia",
+            "population": "2968000",
+            "continentName": "Asia",
+            "languages": "hy"
+        },
+        {
+            "countryName": "Angola",
+            "population": "13068161",
+            "continentName": "Africa",
+            "languages": "pt-AO"
+        },
+        {
+            "countryName": "Antarctica",
+            "population": "0",
+            "continentName": "Antarctica",
+            "languages": ""
+        },
+        {
+            "countryName": "Argentina",
+            "population": "41343201",
+            "continentName": "South America",
+            "languages": "es-AR,en,it,de,fr,gn"
+        },
+        {
+            "countryName": "American Samoa",
+            "population": "57881",
+            "continentName": "Oceania",
+            "languages": "en-AS,sm,to"
+        },
+        {
+            "countryName": "Austria",
+            "population": "8205000",
+            "continentName": "Europe",
+            "languages": "de-AT,hr,hu,sl"
+        },
+        {
+            "countryName": "Australia",
+            "population": "21515754",
+            "continentName": "Oceania",
+            "languages": "en-AU"
+        },
+        {
+            "countryName": "Aruba",
+            "population": "71566",
+            "continentName": "North America",
+            "languages": "nl-AW,es,en"
+        },
+        {
+            "countryName": "Åland",
+            "population": "26711",
+            "continentName": "Europe",
+            "languages": "sv-AX"
+        },
+        {
+            "countryName": "Azerbaijan",
+            "population": "8303512",
+            "continentName": "Asia",
+            "languages": "az,ru,hy"
+        },
+        {
+            "countryName": "Bosnia and Herzegovina",
+            "population": "4590000",
+            "continentName": "Europe",
+            "languages": "bs,hr-BA,sr-BA"
+        },
+        {
+            "countryName": "Barbados",
+            "population": "285653",
+            "continentName": "North America",
+            "languages": "en-BB"
+        },
+        {
+            "countryName": "Bangladesh",
+            "population": "156118464",
+            "continentName": "Asia",
+            "languages": "bn-BD,en"
+        },
+        {
+            "countryName": "Belgium",
+            "population": "10403000",
+            "continentName": "Europe",
+            "languages": "nl-BE,fr-BE,de-BE"
+        },
+        {
+            "countryName": "Burkina Faso",
+            "population": "16241811",
+            "continentName": "Africa",
+            "languages": "fr-BF"
+        },
+        {
+            "countryName": "Bulgaria",
+            "population": "7148785",
+            "continentName": "Europe",
+            "languages": "bg,tr-BG,rom"
+        },
+        {
+            "countryName": "Bahrain",
+            "population": "738004",
+            "continentName": "Asia",
+            "languages": "ar-BH,en,fa,ur"
+        },
+        {
+            "countryName": "Burundi",
+            "population": "9863117",
+            "continentName": "Africa",
+            "languages": "fr-BI,rn"
+        },
+        {
+            "countryName": "Benin",
+            "population": "9056010",
+            "continentName": "Africa",
+            "languages": "fr-BJ"
+        },
+        {
+            "countryName": "Saint Barthélemy",
+            "population": "8450",
+            "continentName": "North America",
+            "languages": "fr"
+        },
+        {
+            "countryName": "Bermuda",
+            "population": "65365",
+            "continentName": "North America",
+            "languages": "en-BM,pt"
+        },
+        {
+            "countryName": "Brunei",
+            "population": "395027",
+            "continentName": "Asia",
+            "languages": "ms-BN,en-BN"
+        },
+        {
+            "countryName": "Bolivia",
+            "population": "9947418",
+            "continentName": "South America",
+            "languages": "es-BO,qu,ay"
+        },
+        {
+            "countryName": "Bonaire",
+            "population": "18012",
+            "continentName": "North America",
+            "languages": "nl,pap,en"
+        },
+        {
+            "countryName": "Brazil",
+            "population": "201103330",
+            "continentName": "South America",
+            "languages": "pt-BR,es,en,fr"
+        },
+        {
+            "countryName": "Bahamas",
+            "population": "301790",
+            "continentName": "North America",
+            "languages": "en-BS"
+        },
+        {
+            "countryName": "Bhutan",
+            "population": "699847",
+            "continentName": "Asia",
+            "languages": "dz"
+        },
+        {
+            "countryName": "Bouvet Island",
+            "population": "0",
+            "continentName": "Antarctica",
+            "languages": ""
+        },
+        {
+            "countryName": "Botswana",
+            "population": "2029307",
+            "continentName": "Africa",
+            "languages": "en-BW,tn-BW"
+        },
+        {
+            "countryName": "Belarus",
+            "population": "9685000",
+            "continentName": "Europe",
+            "languages": "be,ru"
+        },
+        {
+            "countryName": "Belize",
+            "population": "314522",
+            "continentName": "North America",
+            "languages": "en-BZ,es"
+        },
+        {
+            "countryName": "Canada",
+            "population": "33679000",
+            "continentName": "North America",
+            "languages": "en-CA,fr-CA,iu"
+        },
+        {
+            "countryName": "Cocos [Keeling] Islands",
+            "population": "628",
+            "continentName": "Asia",
+            "languages": "ms-CC,en"
+        },
+        {
+            "countryName": "Democratic Republic of the Congo",
+            "population": "70916439",
+            "continentName": "Africa",
+            "languages": "fr-CD,ln,kg"
+        },
+        {
+            "countryName": "Central African Republic",
+            "population": "4844927",
+            "continentName": "Africa",
+            "languages": "fr-CF,sg,ln,kg"
+        },
+        {
+            "countryName": "Republic of the Congo",
+            "population": "3039126",
+            "continentName": "Africa",
+            "languages": "fr-CG,kg,ln-CG"
+        },
+        {
+            "countryName": "Switzerland",
+            "population": "7581000",
+            "continentName": "Europe",
+            "languages": "de-CH,fr-CH,it-CH,rm"
+        },
+        {
+            "countryName": "Ivory Coast",
+            "population": "21058798",
+            "continentName": "Africa",
+            "languages": "fr-CI"
+        },
+        {
+            "countryName": "Cook Islands",
+            "population": "21388",
+            "continentName": "Oceania",
+            "languages": "en-CK,mi"
+        },
+        {
+            "countryName": "Chile",
+            "population": "16746491",
+            "continentName": "South America",
+            "languages": "es-CL"
+        },
+        {
+            "countryName": "Cameroon",
+            "population": "19294149",
+            "continentName": "Africa",
+            "languages": "en-CM,fr-CM"
+        },
+        {
+            "countryName": "China",
+            "population": "1330044000",
+            "continentName": "Asia",
+            "languages": "zh-CN,yue,wuu,dta,ug,za"
+        },
+        {
+            "countryName": "Colombia",
+            "population": "47790000",
+            "continentName": "South America",
+            "languages": "es-CO"
+        },
+        {
+            "countryName": "Costa Rica",
+            "population": "4516220",
+            "continentName": "North America",
+            "languages": "es-CR,en"
+        },
+        {
+            "countryName": "Cuba",
+            "population": "11423000",
+            "continentName": "North America",
+            "languages": "es-CU"
+        },
+        {
+            "countryName": "Cape Verde",
+            "population": "508659",
+            "continentName": "Africa",
+            "languages": "pt-CV"
+        },
+        {
+            "countryName": "Curacao",
+            "population": "141766",
+            "continentName": "North America",
+            "languages": "nl,pap"
+        },
+        {
+            "countryName": "Christmas Island",
+            "population": "1500",
+            "continentName": "Asia",
+            "languages": "en,zh,ms-CC"
+        },
+        {
+            "countryName": "Cyprus",
+            "population": "1102677",
+            "continentName": "Europe",
+            "languages": "el-CY,tr-CY,en"
+        },
+        {
+            "countryName": "Czech Republic",
+            "population": "10476000",
+            "continentName": "Europe",
+            "languages": "cs,sk"
+        },
+        {
+            "countryName": "Germany",
+            "population": "81802257",
+            "continentName": "Europe",
+            "languages": "de"
+        },
+        {
+            "countryName": "Djibouti",
+            "population": "740528",
+            "continentName": "Africa",
+            "languages": "fr-DJ,ar,so-DJ,aa"
+        },
+        {
+            "countryName": "Denmark",
+            "population": "5484000",
+            "continentName": "Europe",
+            "languages": "da-DK,en,fo,de-DK"
+        },
+        {
+            "countryName": "Dominica",
+            "population": "72813",
+            "continentName": "North America",
+            "languages": "en-DM"
+        },
+        {
+            "countryName": "Dominican Republic",
+            "population": "9823821",
+            "continentName": "North America",
+            "languages": "es-DO"
+        },
+        {
+            "countryName": "Algeria",
+            "population": "34586184",
+            "continentName": "Africa",
+            "languages": "ar-DZ"
+        },
+        {
+            "countryName": "Ecuador",
+            "population": "14790608",
+            "continentName": "South America",
+            "languages": "es-EC"
+        },
+        {
+            "countryName": "Estonia",
+            "population": "1291170",
+            "continentName": "Europe",
+            "languages": "et,ru"
+        },
+        {
+            "countryName": "Egypt",
+            "population": "80471869",
+            "continentName": "Africa",
+            "languages": "ar-EG,en,fr"
+        },
+        {
+            "countryName": "Western Sahara",
+            "population": "273008",
+            "continentName": "Africa",
+            "languages": "ar,mey"
+        },
+        {
+            "countryName": "Eritrea",
+            "population": "5792984",
+            "continentName": "Africa",
+            "languages": "aa-ER,ar,tig,kun,ti-ER"
+        },
+        {
+            "countryName": "Spain",
+            "population": "46505963",
+            "continentName": "Europe",
+            "languages": "es-ES,ca,gl,eu,oc"
+        },
+        {
+            "countryName": "Ethiopia",
+            "population": "88013491",
+            "continentName": "Africa",
+            "languages": "am,en-ET,om-ET,ti-ET,so-ET,sid"
+        },
+        {
+            "countryName": "Finland",
+            "population": "5244000",
+            "continentName": "Europe",
+            "languages": "fi-FI,sv-FI,smn"
+        },
+        {
+            "countryName": "Fiji",
+            "population": "875983",
+            "continentName": "Oceania",
+            "languages": "en-FJ,fj"
+        },
+        {
+            "countryName": "Falkland Islands",
+            "population": "2638",
+            "continentName": "South America",
+            "languages": "en-FK"
+        },
+        {
+            "countryName": "Micronesia",
+            "population": "107708",
+            "continentName": "Oceania",
+            "languages": "en-FM,chk,pon,yap,kos,uli,woe,nkr,kpg"
+        },
+        {
+            "countryName": "Faroe Islands",
+            "population": "48228",
+            "continentName": "Europe",
+            "languages": "fo,da-FO"
+        },
+        {
+            "countryName": "France",
+            "population": "64768389",
+            "continentName": "Europe",
+            "languages": "fr-FR,frp,br,co,ca,eu,oc"
+        },
+        {
+            "countryName": "Gabon",
+            "population": "1545255",
+            "continentName": "Africa",
+            "languages": "fr-GA"
+        },
+        {
+            "countryName": "United Kingdom",
+            "population": "62348447",
+            "continentName": "Europe",
+            "languages": "en-GB,cy-GB,gd"
+        },
+        {
+            "countryName": "Grenada",
+            "population": "107818",
+            "continentName": "North America",
+            "languages": "en-GD"
+        },
+        {
+            "countryName": "Georgia",
+            "population": "4630000",
+            "continentName": "Asia",
+            "languages": "ka,ru,hy,az"
+        },
+        {
+            "countryName": "French Guiana",
+            "population": "195506",
+            "continentName": "South America",
+            "languages": "fr-GF"
+        },
+        {
+            "countryName": "Guernsey",
+            "population": "65228",
+            "continentName": "Europe",
+            "languages": "en,fr"
+        },
+        {
+            "countryName": "Ghana",
+            "population": "24339838",
+            "continentName": "Africa",
+            "languages": "en-GH,ak,ee,tw"
+        },
+        {
+            "countryName": "Gibraltar",
+            "population": "27884",
+            "continentName": "Europe",
+            "languages": "en-GI,es,it,pt"
+        },
+        {
+            "countryName": "Greenland",
+            "population": "56375",
+            "continentName": "North America",
+            "languages": "kl,da-GL,en"
+        },
+        {
+            "countryName": "Gambia",
+            "population": "1593256",
+            "continentName": "Africa",
+            "languages": "en-GM,mnk,wof,wo,ff"
+        },
+        {
+            "countryName": "Guinea",
+            "population": "10324025",
+            "continentName": "Africa",
+            "languages": "fr-GN"
+        },
+        {
+            "countryName": "Guadeloupe",
+            "population": "443000",
+            "continentName": "North America",
+            "languages": "fr-GP"
+        },
+        {
+            "countryName": "Equatorial Guinea",
+            "population": "1014999",
+            "continentName": "Africa",
+            "languages": "es-GQ,fr"
+        },
+        {
+            "countryName": "Greece",
+            "population": "11000000",
+            "continentName": "Europe",
+            "languages": "el-GR,en,fr"
+        },
+        {
+            "countryName": "South Georgia and the South Sandwich Islands",
+            "population": "30",
+            "continentName": "Antarctica",
+            "languages": "en"
+        },
+        {
+            "countryName": "Guatemala",
+            "population": "13550440",
+            "continentName": "North America",
+            "languages": "es-GT"
+        },
+        {
+            "countryName": "Guam",
+            "population": "159358",
+            "continentName": "Oceania",
+            "languages": "en-GU,ch-GU"
+        },
+        {
+            "countryName": "Guinea-Bissau",
+            "population": "1565126",
+            "continentName": "Africa",
+            "languages": "pt-GW,pov"
+        },
+        {
+            "countryName": "Guyana",
+            "population": "748486",
+            "continentName": "South America",
+            "languages": "en-GY"
+        },
+        {
+            "countryName": "Hong Kong",
+            "population": "6898686",
+            "continentName": "Asia",
+            "languages": "zh-HK,yue,zh,en"
+        },
+        {
+            "countryName": "Heard Island and McDonald Islands",
+            "population": "0",
+            "continentName": "Antarctica",
+            "languages": ""
+        },
+        {
+            "countryName": "Honduras",
+            "population": "7989415",
+            "continentName": "North America",
+            "languages": "es-HN"
+        },
+        {
+            "countryName": "Croatia",
+            "population": "4491000",
+            "continentName": "Europe",
+            "languages": "hr-HR,sr"
+        },
+        {
+            "countryName": "Haiti",
+            "population": "9648924",
+            "continentName": "North America",
+            "languages": "ht,fr-HT"
+        },
+        {
+            "countryName": "Hungary",
+            "population": "9982000",
+            "continentName": "Europe",
+            "languages": "hu-HU"
+        },
+        {
+            "countryName": "Indonesia",
+            "population": "242968342",
+            "continentName": "Asia",
+            "languages": "id,en,nl,jv"
+        },
+        {
+            "countryName": "Ireland",
+            "population": "4622917",
+            "continentName": "Europe",
+            "languages": "en-IE,ga-IE"
+        },
+        {
+            "countryName": "Israel",
+            "population": "7353985",
+            "continentName": "Asia",
+            "languages": "he,ar-IL,en-IL,"
+        },
+        {
+            "countryName": "Isle of Man",
+            "population": "75049",
+            "continentName": "Europe",
+            "languages": "en,gv"
+        },
+        {
+            "countryName": "India",
+            "population": "1173108018",
+            "continentName": "Asia",
+            "languages": "en-IN,hi,bn,te,mr,ta,ur,gu,kn,ml,or,pa,as,bh,sat,ks,ne,sd,kok,doi,mni,sit,sa,fr,lus,inc"
+        },
+        {
+            "countryName": "British Indian Ocean Territory",
+            "population": "4000",
+            "continentName": "Asia",
+            "languages": "en-IO"
+        },
+        {
+            "countryName": "Iraq",
+            "population": "29671605",
+            "continentName": "Asia",
+            "languages": "ar-IQ,ku,hy"
+        },
+        {
+            "countryName": "Iran",
+            "population": "76923300",
+            "continentName": "Asia",
+            "languages": "fa-IR,ku"
+        },
+        {
+            "countryName": "Iceland",
+            "population": "308910",
+            "continentName": "Europe",
+            "languages": "is,en,de,da,sv,no"
+        },
+        {
+            "countryName": "Italy",
+            "population": "60340328",
+            "continentName": "Europe",
+            "languages": "it-IT,de-IT,fr-IT,sc,ca,co,sl"
+        },
+        {
+            "countryName": "Jersey",
+            "population": "90812",
+            "continentName": "Europe",
+            "languages": "en,pt"
+        },
+        {
+            "countryName": "Jamaica",
+            "population": "2847232",
+            "continentName": "North America",
+            "languages": "en-JM"
+        },
+        {
+            "countryName": "Jordan",
+            "population": "6407085",
+            "continentName": "Asia",
+            "languages": "ar-JO,en"
+        },
+        {
+            "countryName": "Japan",
+            "population": "127288000",
+            "continentName": "Asia",
+            "languages": "ja"
+        },
+        {
+            "countryName": "Kenya",
+            "population": "40046566",
+            "continentName": "Africa",
+            "languages": "en-KE,sw-KE"
+        },
+        {
+            "countryName": "Kyrgyzstan",
+            "population": "5776500",
+            "continentName": "Asia",
+            "languages": "ky,uz,ru"
+        },
+        {
+            "countryName": "Cambodia",
+            "population": "14453680",
+            "continentName": "Asia",
+            "languages": "km,fr,en"
+        },
+        {
+            "countryName": "Kiribati",
+            "population": "92533",
+            "continentName": "Oceania",
+            "languages": "en-KI,gil"
+        },
+        {
+            "countryName": "Comoros",
+            "population": "773407",
+            "continentName": "Africa",
+            "languages": "ar,fr-KM"
+        },
+        {
+            "countryName": "Saint Kitts and Nevis",
+            "population": "51134",
+            "continentName": "North America",
+            "languages": "en-KN"
+        },
+        {
+            "countryName": "North Korea",
+            "population": "22912177",
+            "continentName": "Asia",
+            "languages": "ko-KP"
+        },
+        {
+            "countryName": "South Korea",
+            "population": "48422644",
+            "continentName": "Asia",
+            "languages": "ko-KR,en"
+        },
+        {
+            "countryName": "Kuwait",
+            "population": "2789132",
+            "continentName": "Asia",
+            "languages": "ar-KW,en"
+        },
+        {
+            "countryName": "Cayman Islands",
+            "population": "44270",
+            "continentName": "North America",
+            "languages": "en-KY"
+        },
+        {
+            "countryName": "Kazakhstan",
+            "population": "15340000",
+            "continentName": "Asia",
+            "languages": "kk,ru"
+        },
+        {
+            "countryName": "Laos",
+            "population": "6368162",
+            "continentName": "Asia",
+            "languages": "lo,fr,en"
+        },
+        {
+            "countryName": "Lebanon",
+            "population": "4125247",
+            "continentName": "Asia",
+            "languages": "ar-LB,fr-LB,en,hy"
+        },
+        {
+            "countryName": "Saint Lucia",
+            "population": "160922",
+            "continentName": "North America",
+            "languages": "en-LC"
+        },
+        {
+            "countryName": "Liechtenstein",
+            "population": "35000",
+            "continentName": "Europe",
+            "languages": "de-LI"
+        },
+        {
+            "countryName": "Sri Lanka",
+            "population": "21513990",
+            "continentName": "Asia",
+            "languages": "si,ta,en"
+        },
+        {
+            "countryName": "Liberia",
+            "population": "3685076",
+            "continentName": "Africa",
+            "languages": "en-LR"
+        },
+        {
+            "countryName": "Lesotho",
+            "population": "1919552",
+            "continentName": "Africa",
+            "languages": "en-LS,st,zu,xh"
+        },
+        {
+            "countryName": "Lithuania",
+            "population": "2944459",
+            "continentName": "Europe",
+            "languages": "lt,ru,pl"
+        },
+        {
+            "countryName": "Luxembourg",
+            "population": "497538",
+            "continentName": "Europe",
+            "languages": "lb,de-LU,fr-LU"
+        },
+        {
+            "countryName": "Latvia",
+            "population": "2217969",
+            "continentName": "Europe",
+            "languages": "lv,ru,lt"
+        },
+        {
+            "countryName": "Libya",
+            "population": "6461454",
+            "continentName": "Africa",
+            "languages": "ar-LY,it,en"
+        },
+        {
+            "countryName": "Morocco",
+            "population": "31627428",
+            "continentName": "Africa",
+            "languages": "ar-MA,fr"
+        },
+        {
+            "countryName": "Monaco",
+            "population": "32965",
+            "continentName": "Europe",
+            "languages": "fr-MC,en,it"
+        },
+        {
+            "countryName": "Moldova",
+            "population": "4324000",
+            "continentName": "Europe",
+            "languages": "ro,ru,gag,tr"
+        },
+        {
+            "countryName": "Montenegro",
+            "population": "666730",
+            "continentName": "Europe",
+            "languages": "sr,hu,bs,sq,hr,rom"
+        },
+        {
+            "countryName": "Saint Martin",
+            "population": "35925",
+            "continentName": "North America",
+            "languages": "fr"
+        },
+        {
+            "countryName": "Madagascar",
+            "population": "21281844",
+            "continentName": "Africa",
+            "languages": "fr-MG,mg"
+        },
+        {
+            "countryName": "Marshall Islands",
+            "population": "65859",
+            "continentName": "Oceania",
+            "languages": "mh,en-MH"
+        },
+        {
+            "countryName": "Macedonia",
+            "population": "2062294",
+            "continentName": "Europe",
+            "languages": "mk,sq,tr,rmm,sr"
+        },
+        {
+            "countryName": "Mali",
+            "population": "13796354",
+            "continentName": "Africa",
+            "languages": "fr-ML,bm"
+        },
+        {
+            "countryName": "Myanmar [Burma]",
+            "population": "53414374",
+            "continentName": "Asia",
+            "languages": "my"
+        },
+        {
+            "countryName": "Mongolia",
+            "population": "3086918",
+            "continentName": "Asia",
+            "languages": "mn,ru"
+        },
+        {
+            "countryName": "Macao",
+            "population": "449198",
+            "continentName": "Asia",
+            "languages": "zh,zh-MO,pt"
+        },
+        {
+            "countryName": "Northern Mariana Islands",
+            "population": "53883",
+            "continentName": "Oceania",
+            "languages": "fil,tl,zh,ch-MP,en-MP"
+        },
+        {
+            "countryName": "Martinique",
+            "population": "432900",
+            "continentName": "North America",
+            "languages": "fr-MQ"
+        },
+        {
+            "countryName": "Mauritania",
+            "population": "3205060",
+            "continentName": "Africa",
+            "languages": "ar-MR,fuc,snk,fr,mey,wo"
+        },
+        {
+            "countryName": "Montserrat",
+            "population": "9341",
+            "continentName": "North America",
+            "languages": "en-MS"
+        },
+        {
+            "countryName": "Malta",
+            "population": "403000",
+            "continentName": "Europe",
+            "languages": "mt,en-MT"
+        },
+        {
+            "countryName": "Mauritius",
+            "population": "1294104",
+            "continentName": "Africa",
+            "languages": "en-MU,bho,fr"
+        },
+        {
+            "countryName": "Maldives",
+            "population": "395650",
+            "continentName": "Asia",
+            "languages": "dv,en"
+        },
+        {
+            "countryName": "Malawi",
+            "population": "15447500",
+            "continentName": "Africa",
+            "languages": "ny,yao,tum,swk"
+        },
+        {
+            "countryName": "Mexico",
+            "population": "112468855",
+            "continentName": "North America",
+            "languages": "es-MX"
+        },
+        {
+            "countryName": "Malaysia",
+            "population": "28274729",
+            "continentName": "Asia",
+            "languages": "ms-MY,en,zh,ta,te,ml,pa,th"
+        },
+        {
+            "countryName": "Mozambique",
+            "population": "22061451",
+            "continentName": "Africa",
+            "languages": "pt-MZ,vmw"
+        },
+        {
+            "countryName": "Namibia",
+            "population": "2128471",
+            "continentName": "Africa",
+            "languages": "en-NA,af,de,hz,naq"
+        },
+        {
+            "countryName": "New Caledonia",
+            "population": "216494",
+            "continentName": "Oceania",
+            "languages": "fr-NC"
+        },
+        {
+            "countryName": "Niger",
+            "population": "15878271",
+            "continentName": "Africa",
+            "languages": "fr-NE,ha,kr,dje"
+        },
+        {
+            "countryName": "Norfolk Island",
+            "population": "1828",
+            "continentName": "Oceania",
+            "languages": "en-NF"
+        },
+        {
+            "countryName": "Nigeria",
+            "population": "154000000",
+            "continentName": "Africa",
+            "languages": "en-NG,ha,yo,ig,ff"
+        },
+        {
+            "countryName": "Nicaragua",
+            "population": "5995928",
+            "continentName": "North America",
+            "languages": "es-NI,en"
+        },
+        {
+            "countryName": "Netherlands",
+            "population": "16645000",
+            "continentName": "Europe",
+            "languages": "nl-NL,fy-NL"
+        },
+        {
+            "countryName": "Norway",
+            "population": "5009150",
+            "continentName": "Europe",
+            "languages": "no,nb,nn,se,fi"
+        },
+        {
+            "countryName": "Nepal",
+            "population": "28951852",
+            "continentName": "Asia",
+            "languages": "ne,en"
+        },
+        {
+            "countryName": "Nauru",
+            "population": "10065",
+            "continentName": "Oceania",
+            "languages": "na,en-NR"
+        },
+        {
+            "countryName": "Niue",
+            "population": "2166",
+            "continentName": "Oceania",
+            "languages": "niu,en-NU"
+        },
+        {
+            "countryName": "New Zealand",
+            "population": "4252277",
+            "continentName": "Oceania",
+            "languages": "en-NZ,mi"
+        },
+        {
+            "countryName": "Oman",
+            "population": "2967717",
+            "continentName": "Asia",
+            "languages": "ar-OM,en,bal,ur"
+        },
+        {
+            "countryName": "Panama",
+            "population": "3410676",
+            "continentName": "North America",
+            "languages": "es-PA,en"
+        },
+        {
+            "countryName": "Peru",
+            "population": "29907003",
+            "continentName": "South America",
+            "languages": "es-PE,qu,ay"
+        },
+        {
+            "countryName": "French Polynesia",
+            "population": "270485",
+            "continentName": "Oceania",
+            "languages": "fr-PF,ty"
+        },
+        {
+            "countryName": "Papua New Guinea",
+            "population": "6064515",
+            "continentName": "Oceania",
+            "languages": "en-PG,ho,meu,tpi"
+        },
+        {
+            "countryName": "Philippines",
+            "population": "99900177",
+            "continentName": "Asia",
+            "languages": "tl,en-PH,fil"
+        },
+        {
+            "countryName": "Pakistan",
+            "population": "184404791",
+            "continentName": "Asia",
+            "languages": "ur-PK,en-PK,pa,sd,ps,brh"
+        },
+        {
+            "countryName": "Poland",
+            "population": "38500000",
+            "continentName": "Europe",
+            "languages": "pl"
+        },
+        {
+            "countryName": "Saint Pierre and Miquelon",
+            "population": "7012",
+            "continentName": "North America",
+            "languages": "fr-PM"
+        },
+        {
+            "countryName": "Pitcairn Islands",
+            "population": "46",
+            "continentName": "Oceania",
+            "languages": "en-PN"
+        },
+        {
+            "countryName": "Puerto Rico",
+            "population": "3916632",
+            "continentName": "North America",
+            "languages": "en-PR,es-PR"
+        },
+        {
+            "countryName": "Palestine",
+            "population": "3800000",
+            "continentName": "Asia",
+            "languages": "ar-PS"
+        },
+        {
+            "countryName": "Portugal",
+            "population": "10676000",
+            "continentName": "Europe",
+            "languages": "pt-PT,mwl"
+        },
+        {
+            "countryName": "Palau",
+            "population": "19907",
+            "continentName": "Oceania",
+            "languages": "pau,sov,en-PW,tox,ja,fil,zh"
+        },
+        {
+            "countryName": "Paraguay",
+            "population": "6375830",
+            "continentName": "South America",
+            "languages": "es-PY,gn"
+        },
+        {
+            "countryName": "Qatar",
+            "population": "840926",
+            "continentName": "Asia",
+            "languages": "ar-QA,es"
+        },
+        {
+            "countryName": "Réunion",
+            "population": "776948",
+            "continentName": "Africa",
+            "languages": "fr-RE"
+        },
+        {
+            "countryName": "Romania",
+            "population": "21959278",
+            "continentName": "Europe",
+            "languages": "ro,hu,rom"
+        },
+        {
+            "countryName": "Serbia",
+            "population": "7344847",
+            "continentName": "Europe",
+            "languages": "sr,hu,bs,rom"
+        },
+        {
+            "countryName": "Russia",
+            "population": "140702000",
+            "continentName": "Europe",
+            "languages": "ru,tt,xal,cau,ady,kv,ce,tyv,cv,udm,tut,mns,bua,myv,mdf,chm,ba,inh,tut,kbd,krc,ava,sah,nog"
+        },
+        {
+            "countryName": "Rwanda",
+            "population": "11055976",
+            "continentName": "Africa",
+            "languages": "rw,en-RW,fr-RW,sw"
+        },
+        {
+            "countryName": "Saudi Arabia",
+            "population": "25731776",
+            "continentName": "Asia",
+            "languages": "ar-SA"
+        },
+        {
+            "countryName": "Solomon Islands",
+            "population": "559198",
+            "continentName": "Oceania",
+            "languages": "en-SB,tpi"
+        },
+        {
+            "countryName": "Seychelles",
+            "population": "88340",
+            "continentName": "Africa",
+            "languages": "en-SC,fr-SC"
+        },
+        {
+            "countryName": "Sudan",
+            "population": "35000000",
+            "continentName": "Africa",
+            "languages": "ar-SD,en,fia"
+        },
+        {
+            "countryName": "Sweden",
+            "population": "9828655",
+            "continentName": "Europe",
+            "languages": "sv-SE,se,sma,fi-SE"
+        },
+        {
+            "countryName": "Singapore",
+            "population": "4701069",
+            "continentName": "Asia",
+            "languages": "cmn,en-SG,ms-SG,ta-SG,zh-SG"
+        },
+        {
+            "countryName": "Saint Helena",
+            "population": "7460",
+            "continentName": "Africa",
+            "languages": "en-SH"
+        },
+        {
+            "countryName": "Slovenia",
+            "population": "2007000",
+            "continentName": "Europe",
+            "languages": "sl,sh"
+        },
+        {
+            "countryName": "Svalbard and Jan Mayen",
+            "population": "2550",
+            "continentName": "Europe",
+            "languages": "no,ru"
+        },
+        {
+            "countryName": "Slovakia",
+            "population": "5455000",
+            "continentName": "Europe",
+            "languages": "sk,hu"
+        },
+        {
+            "countryName": "Sierra Leone",
+            "population": "5245695",
+            "continentName": "Africa",
+            "languages": "en-SL,men,tem"
+        },
+        {
+            "countryName": "San Marino",
+            "population": "31477",
+            "continentName": "Europe",
+            "languages": "it-SM"
+        },
+        {
+            "countryName": "Senegal",
+            "population": "12323252",
+            "continentName": "Africa",
+            "languages": "fr-SN,wo,fuc,mnk"
+        },
+        {
+            "countryName": "Somalia",
+            "population": "10112453",
+            "continentName": "Africa",
+            "languages": "so-SO,ar-SO,it,en-SO"
+        },
+        {
+            "countryName": "Suriname",
+            "population": "492829",
+            "continentName": "South America",
+            "languages": "nl-SR,en,srn,hns,jv"
+        },
+        {
+            "countryName": "South Sudan",
+            "population": "8260490",
+            "continentName": "Africa",
+            "languages": "en"
+        },
+        {
+            "countryName": "São Tomé and Príncipe",
+            "population": "175808",
+            "continentName": "Africa",
+            "languages": "pt-ST"
+        },
+        {
+            "countryName": "El Salvador",
+            "population": "6052064",
+            "continentName": "North America",
+            "languages": "es-SV"
+        },
+        {
+            "countryName": "Sint Maarten",
+            "population": "37429",
+            "continentName": "North America",
+            "languages": "nl,en"
+        },
+        {
+            "countryName": "Syria",
+            "population": "22198110",
+            "continentName": "Asia",
+            "languages": "ar-SY,ku,hy,arc,fr,en"
+        },
+        {
+            "countryName": "Swaziland",
+            "population": "1354051",
+            "continentName": "Africa",
+            "languages": "en-SZ,ss-SZ"
+        },
+        {
+            "countryName": "Turks and Caicos Islands",
+            "population": "20556",
+            "continentName": "North America",
+            "languages": "en-TC"
+        },
+        {
+            "countryName": "Chad",
+            "population": "10543464",
+            "continentName": "Africa",
+            "languages": "fr-TD,ar-TD,sre"
+        },
+        {
+            "countryName": "French Southern Territories",
+            "population": "140",
+            "continentName": "Antarctica",
+            "languages": "fr"
+        },
+        {
+            "countryName": "Togo",
+            "population": "6587239",
+            "continentName": "Africa",
+            "languages": "fr-TG,ee,hna,kbp,dag,ha"
+        },
+        {
+            "countryName": "Thailand",
+            "population": "67089500",
+            "continentName": "Asia",
+            "languages": "th,en"
+        },
+        {
+            "countryName": "Tajikistan",
+            "population": "7487489",
+            "continentName": "Asia",
+            "languages": "tg,ru"
+        },
+        {
+            "countryName": "Tokelau",
+            "population": "1466",
+            "continentName": "Oceania",
+            "languages": "tkl,en-TK"
+        },
+        {
+            "countryName": "East Timor",
+            "population": "1154625",
+            "continentName": "Oceania",
+            "languages": "tet,pt-TL,id,en"
+        },
+        {
+            "countryName": "Turkmenistan",
+            "population": "4940916",
+            "continentName": "Asia",
+            "languages": "tk,ru,uz"
+        },
+        {
+            "countryName": "Tunisia",
+            "population": "10589025",
+            "continentName": "Africa",
+            "languages": "ar-TN,fr"
+        },
+        {
+            "countryName": "Tonga",
+            "population": "122580",
+            "continentName": "Oceania",
+            "languages": "to,en-TO"
+        },
+        {
+            "countryName": "Turkey",
+            "population": "77804122",
+            "continentName": "Asia",
+            "languages": "tr-TR,ku,diq,az,av"
+        },
+        {
+            "countryName": "Trinidad and Tobago",
+            "population": "1228691",
+            "continentName": "North America",
+            "languages": "en-TT,hns,fr,es,zh"
+        },
+        {
+            "countryName": "Tuvalu",
+            "population": "10472",
+            "continentName": "Oceania",
+            "languages": "tvl,en,sm,gil"
+        },
+        {
+            "countryName": "Taiwan",
+            "population": "22894384",
+            "continentName": "Asia",
+            "languages": "zh-TW,zh,nan,hak"
+        },
+        {
+            "countryName": "Tanzania",
+            "population": "41892895",
+            "continentName": "Africa",
+            "languages": "sw-TZ,en,ar"
+        },
+        {
+            "countryName": "Ukraine",
+            "population": "45415596",
+            "continentName": "Europe",
+            "languages": "uk,ru-UA,rom,pl,hu"
+        },
+        {
+            "countryName": "Uganda",
+            "population": "33398682",
+            "continentName": "Africa",
+            "languages": "en-UG,lg,sw,ar"
+        },
+        {
+            "countryName": "U.S. Minor Outlying Islands",
+            "population": "0",
+            "continentName": "Oceania",
+            "languages": "en-UM"
+        },
+        {
+            "countryName": "United States",
+            "population": "310232863",
+            "continentName": "North America",
+            "languages": "en-US,es-US,haw,fr"
+        },
+        {
+            "countryName": "Uruguay",
+            "population": "3477000",
+            "continentName": "South America",
+            "languages": "es-UY"
+        },
+        {
+            "countryName": "Uzbekistan",
+            "population": "27865738",
+            "continentName": "Asia",
+            "languages": "uz,ru,tg"
+        },
+        {
+            "countryName": "Vatican City",
+            "population": "921",
+            "continentName": "Europe",
+            "languages": "la,it,fr"
+        },
+        {
+            "countryName": "Saint Vincent and the Grenadines",
+            "population": "104217",
+            "continentName": "North America",
+            "languages": "en-VC,fr"
+        },
+        {
+            "countryName": "Venezuela",
+            "population": "27223228",
+            "continentName": "South America",
+            "languages": "es-VE"
+        },
+        {
+            "countryName": "British Virgin Islands",
+            "population": "21730",
+            "continentName": "North America",
+            "languages": "en-VG"
+        },
+        {
+            "countryName": "U.S. Virgin Islands",
+            "population": "108708",
+            "continentName": "North America",
+            "languages": "en-VI"
+        },
+        {
+            "countryName": "Vietnam",
+            "population": "89571130",
+            "continentName": "Asia",
+            "languages": "vi,en,fr,zh,km"
+        },
+        {
+            "countryName": "Vanuatu",
+            "population": "221552",
+            "continentName": "Oceania",
+            "languages": "bi,en-VU,fr-VU"
+        },
+        {
+            "countryName": "Wallis and Futuna",
+            "population": "16025",
+            "continentName": "Oceania",
+            "languages": "wls,fud,fr-WF"
+        },
+        {
+            "countryName": "Samoa",
+            "population": "192001",
+            "continentName": "Oceania",
+            "languages": "sm,en-WS"
+        },
+        {
+            "countryName": "Kosovo",
+            "population": "1800000",
+            "continentName": "Europe",
+            "languages": "sq,sr"
+        },
+        {
+            "countryName": "Yemen",
+            "population": "23495361",
+            "continentName": "Asia",
+            "languages": "ar-YE"
+        },
+        {
+            "countryName": "Mayotte",
+            "population": "159042",
+            "continentName": "Africa",
+            "languages": "fr-YT"
+        },
+        {
+            "countryName": "South Africa",
+            "population": "49000000",
+            "continentName": "Africa",
+            "languages": "zu,xh,af,nso,en-ZA,tn,st,ts,ss,ve,nr"
+        },
+        {
+            "countryName": "Zambia",
+            "population": "13460305",
+            "continentName": "Africa",
+            "languages": "en-ZM,bem,loz,lun,lue,ny,toi"
+        },
+        {
+            "countryName": "Zimbabwe",
+            "population": "13061000",
+            "continentName": "Africa",
+            "languages": "en-ZW,sn,nr,nd"
+        }
+    ]
+}
