@@ -1,0 +1,36 @@
+# IDEs
+.project
+.idea
+
+# Distribution / Packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Cache
+__pycache__/
+.cache
+*.pyc
+
+# Testing
+.coverage
+.tox
+
+# Project's settings
+.env
+
+# Documentation
+docs/_build/

@@ -1,0 +1,15 @@
+machine:
+  python:
+    version: 3.4.3
+
+dependencies:
+  pre:
+    - pip install -U pip
+  post:
+    - pip install coveralls
+
+test:
+  pre:
+    - pyenv local 2.7 3.3.3 3.4.3 3.5.0
+  override:
+    - tox
