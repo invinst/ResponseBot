@@ -1,7 +1,7 @@
 # ResponseBot
 
 ## Description
-A framework for developing listen-and-answer twitter bots.
+An open source framework for developing listen-and-answer twitter bots.
 
 ## Installation
 ```
