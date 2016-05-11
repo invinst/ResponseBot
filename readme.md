@@ -1,7 +1,10 @@
 # ResponseBot
 
 ## Description
-A framework for developing listen-and-answer twitter bots.
+
+ResponseBot is a framework for developing listen-and-answer Twitter bots.
+
+We used ResponseBot to make __[@cpdpbot](https://twitter.com/cpdpbot)__: "Send me a tweet mentioning a Chicago Police Officer by name and I’ll reply to you if there is any public data on their complaints history."
 
 ## Installation
 ```
