@@ -45,14 +45,15 @@ class ResponseBotConfig(object):
         :param dict kwargs: CLI options
         """
         self._load_config_from_cli_argument(key='handlers_package', **kwargs)
-        self._load_config_from_cli_argument(key='consumer_key', **kwargs)
-        self._load_config_from_cli_argument(key='consumer_secret', **kwargs)
-        self._load_config_from_cli_argument(key='token_key', **kwargs)
-        self._load_config_from_cli_argument(key='token_secret', **kwargs)
+        self._load_config_from_cli_argument(key='auth', **kwargs)
 
     def _load_config_from_cli_argument(self, key, **kwargs):
         if kwargs.get(key):
-            self._config[key] = kwargs.get(key)
+            if key == 'auth':
+                self._config['consumer_key'], self._config['consumer_secret'],\
+                self._config['token_key'], self._config['token_secret'] = kwargs.get(key)
+            else:
+                self._config[key] = kwargs.get(key)
 
     def validate_configs(self):
         """
