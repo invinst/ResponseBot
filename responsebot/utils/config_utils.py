@@ -38,6 +38,11 @@ class ResponseBotConfig(object):
             self._config['token_key'] = config_parser.get('auth', 'token_key')
             self._config['token_secret'] = config_parser.get('auth', 'token_secret')
 
+        if config_parser.has_section('stream'):
+            self._config['user_stream'] = config_parser.get('stream', 'user_stream').lower() == 'true'
+        else:
+            self._config['user_stream'] = False
+
     def load_config_from_cli_arguments(self, *args, **kwargs):
         """
         Get config values of passed in CLI options.
@@ -46,6 +51,7 @@ class ResponseBotConfig(object):
         """
         self._load_config_from_cli_argument(key='handlers_package', **kwargs)
         self._load_config_from_cli_argument(key='auth', **kwargs)
+        self._load_config_from_cli_argument(key='user_stream', **kwargs)
 
     def _load_config_from_cli_argument(self, key, **kwargs):
         if kwargs.get(key):

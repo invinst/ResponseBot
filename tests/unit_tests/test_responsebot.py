@@ -24,16 +24,13 @@ class ResponseBotTestCase(TestCase):
                 patch('responsebot.responsebot.ResponseBotStream') as mock_stream:
             ResponseBot(
                 handlers_package='some_package',
-                consumer_key='ck',
-                consumer_secret='cs',
-                token_key='tk',
-                token_secret='ts'
+                auth=('ck', 'cs', 'tk', 'ts'),
             ).start()
 
             self.assertTrue(mock_auth.called)
             self.assertTrue(mock_discover.called)
             mock_listener.assert_called_once_with(client=client, handler_classes=handler_classes)
-            mock_stream.assert_called_once_with(client=client, listener=listener)
+            mock_stream.assert_called_once_with(client=client, listener=listener, user_stream=False)
             mock_stream().start.assert_called_once_with()
 
     @patch('logging.error')

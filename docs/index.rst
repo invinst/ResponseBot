@@ -13,6 +13,7 @@ Contents:
 
    getting_started
    tutorial
+   streams_and_filters
    reference
 
 Indices and tables

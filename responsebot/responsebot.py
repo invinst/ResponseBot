@@ -62,7 +62,7 @@ class ResponseBot(object):
         try:
             listener = ResponseBotListener(client=client, handler_classes=handler_classes)
 
-            stream = ResponseBotStream(client=client, listener=listener)
+            stream = ResponseBotStream(client=client, listener=listener, user_stream=self.config.get('user_stream'))
             stream.start()
         except UserHandlerError as e:
             # TODO: print only stack trace from user exception

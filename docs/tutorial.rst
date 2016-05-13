@@ -32,12 +32,31 @@ Otherwise it should show an error
 
      [ERROR] 2016-05-04 10:52:17 Could not authenticate.
 
+You can pass the credentials as a :code:`start_responsebot`'s option instead of using a config file:
+
+.. code-block:: bash
+
+   $ start_responsebot --auth <consumer_key> <consumer_secret> <token_key> <token_secret>
+
+Listen to public stream or user stream
+--------------------------------------
+
+The bot can listen to every tweets in the world (that match some keywords) or it can listen to its authenticated user's
+timeline, as if it is that user. By default, the bot listen to the public stream, you can tell it to listen to the user
+stream as follow:
+
+.. code-block:: bash
+
+   $ start_responsebot --user-stream
+
+See more about stream and filters `here <streams_and_filters.html>`_.
+
 Handler
 -------
 
 To receive an incoming tweet, you need to subclass :code:`BaseTweetHandler` and implement the :code:`on_tweet` method.
 You can specify what kind of tweets the bot should listen to by returning an appropriate
-`TweetFilter <reference/responsebot.models.html#TweetFilter>`_ in the :code:`get_filter` method.
+`TweetFilter <reference/responsebot.models.html#responsebot.models.TweetFilter>`_ in the :code:`get_filter` method.
 
 .. code-block:: python
 
@@ -45,7 +64,10 @@ You can specify what kind of tweets the bot should listen to by returning an app
        def on_tweet(self, tweet):
            print('Received tweet: %s from %s' % (tweet.text, tweet.user.screen_name))
 
-See what :code:`tweet` object contains in `reference <reference/responsebot.models.html#Tweet>`_.
+       def get_filter(self):
+        return TweetFilter(track=['Donald Trump'], follow=['<your personal Twitter id>'])
+
+See what :code:`tweet` object contains in `reference <reference/responsebot.models.html#responsebot.models.Tweet>`_.
 
 Client
 ------

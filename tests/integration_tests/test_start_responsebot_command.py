@@ -31,4 +31,4 @@ class StartResponseBotCommandTestCase(TestCase):
             ])
 
             mock_responsebot.assert_called_once_with(auth=(consumer_key, consumer_secret, token_key, token_secret),
-                                                     handlers_package=handlers_package)
+                                                     handlers_package=handlers_package, user_stream=False)

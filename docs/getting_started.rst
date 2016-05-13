@@ -59,8 +59,8 @@ The bot should now receive tweets containing 'Donald Trump' or tweets posted by 
 
 Handler
 -------
-This is where you handle incoming tweet. For more information, see `handler reference <reference/responsebot.handlers.base.html>`_.
+For a list of methods you can define in your custom handlers, see `handler reference <reference/responsebot.handlers.base.html>`_.
 
-Client
-------
-We support a client to perform twitter actions like create, delete a tweet. For full list of supported actions, please look at the `client reference <reference/responsebot.responsebot_client.html>`_.
+Reply to tweets
+---------------
+You can reply to received tweets, see more in the `tutorial's client section <tutorial.html#client>`_

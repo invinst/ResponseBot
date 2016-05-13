@@ -1,5 +1,7 @@
 from __future__ import absolute_import
 
+import logging
+
 import tweepy
 from tweepy.error import TweepError
 
@@ -11,7 +13,7 @@ class ResponseBotStream(object):
     """
     Connect to Twitter's streaming API and handle any error that occurs.
     """
-    def __init__(self, client, listener):
+    def __init__(self, client, listener, user_stream):
         """
         :param client: Some Twitter API client for authentication. E.g. :class:`~responsebot.tweet_client.TweetClient`
         :param listener: A central listener that will receive tweets from the stream and forward them to user's
@@ -20,6 +22,7 @@ class ResponseBotStream(object):
         self.client = client
         self.listener = listener
         self.filter = listener.get_merged_filter()
+        self.user_stream = user_stream
 
     def start(self, retry_limit=None):
         """
@@ -36,7 +39,15 @@ class ResponseBotStream(object):
         while retry_limit is None or retry_counter <= retry_limit:
             try:
                 retry_counter += 1
-                stream.filter(follow=self.filter.follow, track=self.filter.track)
+                if not self.user_stream:
+                    logging.info('Listening to public stream')
+                    stream.filter(follow=self.filter.follow, track=self.filter.track)
+                else:
+                    if self.filter.follow:
+                        logging.warning('Follow filters won\'t be used in user stream')
+
+                    logging.info('Listening to user stream')
+                    stream.userstream(track=self.filter.track)
             except TweepError as e:
                 if 'Stream object already connected!' in e.reason or \
                         'Wrong number of locations points' in e.reason:

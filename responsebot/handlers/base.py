@@ -17,7 +17,14 @@ class BaseTweetHandler(object):
 
     def get_filter(self):
         """
-        Override this method for custom filter
+        Override this method for custom filter. By default returns a filter with the bot's authenticated user ID in the
+        follow list.
+
+        Example:
+
+        .. code-block:: python
+
+           return TweetFilter(track=['hello'], follow=['<some_user_id>'])`
         """
         return TweetFilter(follow=[str(self.client.get_current_user().id)])
 
