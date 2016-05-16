@@ -17,7 +17,7 @@ from unittest.case import TestCase
 from tweepy.error import TweepError
 
 from responsebot.common.constants import TWITTER_TWEET_NOT_FOUND_ERROR, TWITTER_USER_NOT_FOUND_ERROR, \
-    TWITTER_PAGE_DOES_NOT_EXISTS_ERROR, TWITTER_DELETE_OTHER_USER_TWEET
+    TWITTER_PAGE_DOES_NOT_EXISTS_ERROR, TWITTER_DELETE_OTHER_USER_TWEET, TWITTER_ACCOUNT_SUSPENDED_ERROR
 from responsebot.common.exceptions import APIError
 from responsebot.responsebot_client import ResponseBotClient
 
@@ -176,3 +176,26 @@ class TweetClientTestCase(TestCase):
         )
 
         self.assertRaises(APIError, self.client.retweet, 123)
+
+    def test_follow_user(self):
+        self.real_client.create_friendship = MagicMock(return_value=MagicMock(_json={'some_key': 'some value'}))
+
+        user = self.client.follow(123, notify=True)
+
+        self.real_client.create_friendship.assert_called_once_with(123, follow=True)
+        self.assertEqual(user.some_key, 'some value')
+
+    def test_follow_user_403(self):
+        self.real_client.create_friendship = MagicMock(side_effect=TweepError(reason='some reason',
+                                                                              api_code=TWITTER_ACCOUNT_SUSPENDED_ERROR))
+        self.real_client.get_user = MagicMock(return_value=MagicMock(_json={'some_key': 'some value'}))
+
+        user = self.client.follow(123, notify=True)
+
+        self.real_client.create_friendship.assert_called_once_with(123, follow=True)
+        self.assertEqual(user.some_key, 'some value')
+
+    def test_follow_user_unknown_exception(self):
+        self.real_client.create_friendship = MagicMock(side_effect=TweepError(reason='unknown'))
+
+        self.assertRaises(APIError, self.client.follow, 123)

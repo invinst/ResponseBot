@@ -66,5 +66,6 @@ class UserHandlerError(ResponseBotError):
     """
     Error to indicate some error caused by a user's handler.
     """
-    def __init__(self, msg='Error from user handler', *args, **kwargs):
+    def __init__(self, user_exception, msg='Error from user handler', *args, **kwargs):
         super(UserHandlerError, self).__init__(msg, *args, **kwargs)
+        self.__cause__ = user_exception

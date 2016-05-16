@@ -96,7 +96,7 @@ class ResponseBotTestCase(TestCase):
 
     @patch('logging.exception')
     def test_log_user_handler_error(self, mock_log):
-        exception = UserHandlerError('message')
+        exception = UserHandlerError(Exception('some exception'), msg='message')
         with patch('responsebot.responsebot.ResponseBotConfig'),\
                 patch('responsebot.utils.handler_utils.discover_handler_classes', return_value=[MagicMock]),\
                 patch('responsebot.utils.auth_utils.auth'),\

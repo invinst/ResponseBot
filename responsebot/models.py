@@ -44,6 +44,12 @@ class Tweet(object):
                 setattr(self, 'retweeted_tweet', Tweet(value))
             elif key == 'quoted_status':
                 setattr(self, 'quoted_tweet', Tweet(value))
+            elif key == 'quoted_status_id_str':
+                setattr(self, 'quoted_tweet_id_str', value)
+            elif key == 'in_reply_to_status_id':
+                setattr(self, 'in_reply_to_tweet_id', value)
+            elif key == 'in_reply_to_status_id_str':
+                setattr(self, 'in_reply_to_tweet_id_str', value)
             else:
                 setattr(self, key, value)
 

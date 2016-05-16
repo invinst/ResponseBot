@@ -51,6 +51,14 @@ class TweetStreamTestCase(TestCase):
 
             mock_filter_call.assert_called_once_with(track=merged_filter.track, follow=merged_filter.follow)
 
+    @patch('responsebot.responsebot_stream.tweepy.Stream.filter',
+           side_effect=AttributeError('\'NoneType\' object has no attribute \'strip\''))
+    def test_ignore_tweepy_attribute_error(self, mock_stream):
+        stream = ResponseBotStream(client=MagicMock(client=MagicMock()), listener=MagicMock(), user_stream=False)
+        stream.start(retry_limit=1)
+
+        self.assertEqual(mock_stream.call_count, 2)
+
     def test_use_user_stream(self):
         merged_filter = MagicMock(track=['track'])
         stream = ResponseBotStream(client=MagicMock(client=MagicMock()), listener=MagicMock(

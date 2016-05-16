@@ -66,3 +66,7 @@ class ResponseBotStream(object):
                 if 'Stream object already connected!' in e.reason or \
                         'Wrong number of locations points' in e.reason:
                     raise APIError(e.reason)
+            except AttributeError as e:
+                # Known Tweepy's issue https://github.com/tweepy/tweepy/issues/576
+                if '\'NoneType\' object has no attribute \'strip\'' in str(e):
+                    pass
