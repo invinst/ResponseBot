@@ -26,9 +26,10 @@ class ResponseBotClient(object):
     """
     Wrapper for all Twitter API clients.
     """
-    def __init__(self, client):
+    def __init__(self, client, config):
         self._client = client
         self._current_user = None
+        self.config = config
 
     @property
     def tweepy_api(self):

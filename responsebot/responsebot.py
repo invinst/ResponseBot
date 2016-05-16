@@ -63,12 +63,7 @@ class ResponseBot(object):
             sys.exit()
 
         try:
-            client = auth_utils.auth(
-                consumer_key=self.config.get('consumer_key'),
-                consumer_secret=self.config.get('consumer_secret'),
-                token_key=self.config.get('token_key'),
-                token_secret=self.config.get('token_secret'),
-            )
+            client = auth_utils.auth(self.config)
         except (APIQuotaError, AuthenticationError) as e:
             logging.error(str(e))
             sys.exit()
@@ -76,7 +71,7 @@ class ResponseBot(object):
         try:
             listener = ResponseBotListener(client=client, handler_classes=handler_classes)
 
-            stream = ResponseBotStream(client=client, listener=listener, user_stream=self.config.get('user_stream'))
+            stream = ResponseBotStream(client=client, listener=listener)
             stream.start()
         except UserHandlerError as e:
             # TODO: print only stack trace from user exception

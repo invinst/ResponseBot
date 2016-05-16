@@ -92,7 +92,7 @@ class TweetFilter(object):
         self.track = track
         self.follow = follow
 
-    def match_tweet(self, tweet):
+    def match_tweet(self, tweet, user_stream):
         """
         Check if a tweet matches the defined criteria
 
@@ -100,11 +100,23 @@ class TweetFilter(object):
         :type tweet: :class:`~responsebot.models.Tweet`
         :return: True if matched, False otherwise
         """
+        if user_stream:
+            if len(self.track) > 0:
+                return self.is_tweet_match_track(tweet)
+
+            return True
+        else:
+            return self.is_tweet_match_track(tweet) or self.is_tweet_match_follow(tweet)
+
+    def is_tweet_match_track(self, tweet):
         tweet_text = tweet.text.lower()
         for value in self.track:
             if value.lower() in tweet_text:
                 return True
 
+        return False
+
+    def is_tweet_match_follow(self, tweet):
         user_mentions = [x['id'] for x in tweet.entities.get('user_mentions', [])]
         for value in self.follow:
             int_value = int(value)

@@ -30,7 +30,8 @@ except ImportError:
 class TweetClientTestCase(TestCase):
     def setUp(self):
         self.real_client = MagicMock()
-        self.client = ResponseBotClient(self.real_client)
+        self.config = MagicMock()
+        self.client = ResponseBotClient(self.real_client, self.config)
 
     def test_post_new_tweet(self):
         self.real_client.update_status = MagicMock(return_value=MagicMock(_json={

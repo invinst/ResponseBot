@@ -11,19 +11,34 @@ class TweetFilterTestCase(TestCase):
         match = Tweet({'text': 'keyword text', 'entities': {}, 'user': {'id': 1}})
         unmatched = Tweet({'text': 'text otherkey', 'entities': {}, 'user': {'id': 1}})
 
-        self.assertTrue(self.filter.match_tweet(match))
-        self.assertFalse(self.filter.match_tweet(unmatched))
+        self.assertTrue(self.filter.match_tweet(match, user_stream=False))
+        self.assertFalse(self.filter.match_tweet(unmatched, user_stream=False))
 
     def test_match_tweet_posters(self):
         match = Tweet({'text': 'text', 'entities': {}, 'user': {'id': 123}})
         unmatched = Tweet({'text': 'text', 'entities': {}, 'user': {'id': 1}})
 
-        self.assertTrue(self.filter.match_tweet(match))
-        self.assertFalse(self.filter.match_tweet(unmatched))
+        self.assertTrue(self.filter.match_tweet(match, user_stream=False))
+        self.assertFalse(self.filter.match_tweet(unmatched, user_stream=False))
 
     def test_match_user_mentions(self):
         match = Tweet({'text': 'text', 'entities': {'user_mentions': [{'id': 123}]}, 'user': {'id': 1}})
         unmatched = Tweet({'text': 'text', 'entities': {'user_mentions': [{'id': 1}]}, 'user': {'id': 1}})
 
-        self.assertTrue(self.filter.match_tweet(match))
-        self.assertFalse(self.filter.match_tweet(unmatched))
+        self.assertTrue(self.filter.match_tweet(match, user_stream=False))
+        self.assertFalse(self.filter.match_tweet(unmatched, user_stream=False))
+
+    def test_match_user_stream_no_track(self):
+        self.filter = TweetFilter(track=[])
+        match = Tweet({'text': 'keyword text', 'entities': {}, 'user': {'id': 1}})
+        unmatched = Tweet({'text': 'text otherkey', 'entities': {}, 'user': {'id': 1}})
+
+        self.assertTrue(self.filter.match_tweet(match, user_stream=True))
+        self.assertTrue(self.filter.match_tweet(unmatched, user_stream=True))
+
+    def test_match_user_stream_with_track(self):
+        match = Tweet({'text': 'keyword text', 'entities': {}, 'user': {'id': 1}})
+        unmatched = Tweet({'text': 'text otherkey', 'entities': {}, 'user': {'id': 1}})
+
+        self.assertTrue(self.filter.match_tweet(match, user_stream=True))
+        self.assertFalse(self.filter.match_tweet(unmatched, user_stream=True))

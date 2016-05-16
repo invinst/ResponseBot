@@ -44,7 +44,7 @@ class ResponseBotTestCase(TestCase):
             self.assertTrue(mock_auth.called)
             self.assertTrue(mock_discover.called)
             mock_listener.assert_called_once_with(client=client, handler_classes=handler_classes)
-            mock_stream.assert_called_once_with(client=client, listener=listener, user_stream=False)
+            mock_stream.assert_called_once_with(client=client, listener=listener)
             mock_stream().start.assert_called_once_with()
 
     @patch('logging.error')

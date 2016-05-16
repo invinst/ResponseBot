@@ -66,7 +66,7 @@ class ResponseBotListener(object):
             if not handler.catch_self_tweets and self.is_self_tweet(tweet):
                 continue
 
-            if not handler.filter.match_tweet(tweet):
+            if not handler.filter.match_tweet(tweet=tweet, user_stream=self.client.config.get('user_stream')):
                 continue
 
             try:
