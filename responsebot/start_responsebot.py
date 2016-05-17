@@ -26,6 +26,8 @@ dotenv.load_dotenv('.env')
 
 @click.command()
 @click.option('--handlers-package', help='Path to package containing all your handlers')
+@click.option('--auth', nargs=4, help='Authentication credentials')
+@click.option('--user-stream', is_flag=True, default=False, help='Whether to use Twitter\'s public or user stream')
 def main(*args, **kwargs):
     """Run responsebot"""
     # TODO: validate options

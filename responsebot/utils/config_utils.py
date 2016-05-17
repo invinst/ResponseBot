@@ -52,6 +52,11 @@ class ResponseBotConfig(object):
             self._config['token_key'] = config_parser.get('auth', 'token_key')
             self._config['token_secret'] = config_parser.get('auth', 'token_secret')
 
+        if config_parser.has_section('stream'):
+            self._config['user_stream'] = config_parser.get('stream', 'user_stream').lower() == 'true'
+        else:
+            self._config['user_stream'] = False
+
     def load_config_from_cli_arguments(self, *args, **kwargs):
         """
         Get config values of passed in CLI options.
@@ -59,14 +64,16 @@ class ResponseBotConfig(object):
         :param dict kwargs: CLI options
         """
         self._load_config_from_cli_argument(key='handlers_package', **kwargs)
-        self._load_config_from_cli_argument(key='consumer_key', **kwargs)
-        self._load_config_from_cli_argument(key='consumer_secret', **kwargs)
-        self._load_config_from_cli_argument(key='token_key', **kwargs)
-        self._load_config_from_cli_argument(key='token_secret', **kwargs)
+        self._load_config_from_cli_argument(key='auth', **kwargs)
+        self._load_config_from_cli_argument(key='user_stream', **kwargs)
 
     def _load_config_from_cli_argument(self, key, **kwargs):
         if kwargs.get(key):
-            self._config[key] = kwargs.get(key)
+            if key == 'auth':
+                self._config['consumer_key'], self._config['consumer_secret'],\
+                self._config['token_key'], self._config['token_secret'] = kwargs.get(key)
+            else:
+                self._config[key] = kwargs.get(key)
 
     def validate_configs(self):
         """

@@ -77,6 +77,12 @@ class TweetFilter(object):
     Define criteria to filter tweets from Twitter's public stream. See `track` and `follow` parameters in `here <https://dev.twitter.com/streaming/overview/request-parameters>`_.
     """
     def __init__(self, track=[], follow=[]):
+        """
+
+        :param track: A list of keywords to follow (each could also be a @mention or a #hashtag)
+        :param follow: A list of user ID strings to follow
+        :return:
+        """
         self.track = track
         self.follow = follow
 
@@ -95,10 +101,8 @@ class TweetFilter(object):
 
         user_mentions = [x['id'] for x in tweet.entities.get('user_mentions', [])]
         for value in self.follow:
-            if tweet.user.id == int(value):
-                return True
-
-            if int(value) in user_mentions:
+            int_value = int(value)
+            if tweet.user.id == int_value or int_value in user_mentions:
                 return True
 
         return False

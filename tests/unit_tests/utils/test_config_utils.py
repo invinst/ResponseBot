@@ -31,10 +31,7 @@ class ConfigUtilsTestCase(TestCase):
     def test_validate_config(self):
         params = {
             'handlers_package': 'handlers_package',
-            'consumer_key': 'consumer_key',
-            'consumer_secret': 'consumer_secret',
-            'token_key': 'token_key',
-            'token_secret': 'token_secret',
+            'auth': ('consumer_key', 'consumer_secret', 'token_key', 'token_secret'),
         }
         try:
             ResponseBotConfig(**params)
@@ -54,10 +51,7 @@ class ConfigUtilsTestCase(TestCase):
     def test_load_config_from_terminal(self, mock_1, mock_2):
         params = {
             'handlers_package': 'handlers_package',
-            'consumer_key': 'consumer_key',
-            'consumer_secret': 'consumer_secret',
-            'token_key': 'token_key',
-            'token_secret': 'token_secret',
+            'auth': ('consumer_key', 'consumer_secret', 'token_key', 'token_secret'),
         }
 
         config = ResponseBotConfig(**params)
