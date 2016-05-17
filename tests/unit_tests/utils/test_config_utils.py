@@ -17,10 +17,7 @@ class ConfigUtilsTestCase(TestCase):
     def test_validate_config(self):
         params = {
             'handlers_package': 'handlers_package',
-            'consumer_key': 'consumer_key',
-            'consumer_secret': 'consumer_secret',
-            'token_key': 'token_key',
-            'token_secret': 'token_secret',
+            'auth': ('consumer_key', 'consumer_secret', 'token_key', 'token_secret'),
         }
         try:
             ResponseBotConfig(**params)
