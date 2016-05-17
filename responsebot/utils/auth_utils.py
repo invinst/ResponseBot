@@ -26,21 +26,19 @@ from responsebot.common.exceptions import AuthenticationError, APIQuotaError
 from responsebot.responsebot_client import ResponseBotClient
 
 
-def auth(consumer_key, consumer_secret, token_key, token_secret):
+def auth(config):
     """
     Perform authentication with Twitter and return a client instance to communicate with Twitter
 
-    :param str consumer_key: Consumer key provided by Twitter
-    :param str consumer_secret: Consumer secret provided by Twitter
-    :param str token_key: App token key provided by Twitter
-    :param str token_secret: App token secret provided by Twitter
+    :param config: ResponseBot config
+    :type config: :class:`~responsebot.utils.config_utils.ResponseBotConfig`
     :return: client instance to execute twitter action
     :rtype: :class:`~responsebot.responsebot_client.ResponseBotClient`
     :raises: :class:`~responsebot.common.exceptions.AuthenticationError`: If failed to authenticate
     :raises: :class:`~responsebot.common.exceptions.APIQuotaError`: If API call rate reached limit
     """
-    auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
-    auth.set_access_token(token_key, token_secret)
+    auth = tweepy.OAuthHandler(config.get('consumer_key'), config.get('consumer_secret'))
+    auth.set_access_token(config.get('token_key'), config.get('token_secret'))
 
     api = tweepy.API(auth)
     try:
@@ -52,4 +50,4 @@ def auth(consumer_key, consumer_secret, token_key, token_secret):
     else:
         logging.info('Successfully authenticated as %s' % api.me().screen_name)
 
-        return ResponseBotClient(client=api)
+        return ResponseBotClient(config=config, client=api)

@@ -46,9 +46,9 @@ class ResponseBotListener(object):
                 logging.info('Successfully registered {handler_class}'.format(
                     handler_class=getattr(handler_class, '__name__', str(handler_class)))
                 )
-            except Exception:
+            except Exception as e:
                 # Catch all exception from user handler
-                raise UserHandlerError()
+                raise UserHandlerError(user_exception=e)
 
     def on_tweet(self, tweet):
         """
@@ -66,14 +66,14 @@ class ResponseBotListener(object):
             if not handler.catch_self_tweets and self.is_self_tweet(tweet):
                 continue
 
-            if not handler.filter.match_tweet(tweet):
+            if not handler.filter.match_tweet(tweet=tweet, user_stream=self.client.config.get('user_stream')):
                 continue
 
             try:
                 handler.on_tweet(tweet)
-            except Exception:
+            except Exception as e:
                 # Catch all exception from user handler
-                raise UserHandlerError()
+                raise UserHandlerError(user_exception=e)
 
     def is_self_tweet(self, tweet):
         return self.client.get_current_user().id == tweet.user.id

@@ -17,7 +17,7 @@ from __future__ import absolute_import
 from tweepy.error import TweepError
 
 from responsebot.common.constants import TWITTER_PAGE_DOES_NOT_EXISTS_ERROR, TWITTER_TWEET_NOT_FOUND_ERROR, \
-    TWITTER_USER_NOT_FOUND_ERROR, TWITTER_DELETE_OTHER_USER_TWEET
+    TWITTER_USER_NOT_FOUND_ERROR, TWITTER_DELETE_OTHER_USER_TWEET, TWITTER_ACCOUNT_SUSPENDED_ERROR
 from responsebot.common.exceptions import APIError
 from responsebot.models import Tweet, User
 
@@ -26,9 +26,10 @@ class ResponseBotClient(object):
     """
     Wrapper for all Twitter API clients.
     """
-    def __init__(self, client):
+    def __init__(self, client, config):
         self._client = client
         self._current_user = None
+        self.config = config
 
     @property
     def tweepy_api(self):
@@ -109,4 +110,19 @@ class ResponseBotClient(object):
         except TweepError as e:
             if e.api_code in [TWITTER_PAGE_DOES_NOT_EXISTS_ERROR, TWITTER_DELETE_OTHER_USER_TWEET]:
                 return False
+            raise APIError(str(e))
+
+    def follow(self, user_id, notify=False):
+        """
+        Follow a user.
+
+        :param user_id: ID of the user in question
+        :param notify: whether to notify the user about the following
+        :return: user that are followed
+        """
+        try:
+            return User(self._client.create_friendship(user_id, follow=notify)._json)
+        except TweepError as e:
+            if e.api_code in [TWITTER_ACCOUNT_SUSPENDED_ERROR]:
+                return self.get_user(user_id)
             raise APIError(str(e))

@@ -23,9 +23,9 @@ from dateutil.parser import parse
 class Tweet(object):
     """
     Represents a tweet. E.g. you can get a tweet's text via it's :code:`text` property (:code:`tweet.text`).
-    All properties except :code:`retweeted_status` and :code:`quoted_status` have the same name as Twitter defined
-    them `here <https://dev.twitter.com/overview/api/tweets>`_. :code:`retweeted_status` is renamed to
-    :code:`retweeted_tweet` and :code:`quoted_status` is :code:`quoted_tweet`.
+    All properties except :code:`retweeted_status`, :code:`quoted_status`, :code:`quoted_status_id_str`, :code:`in_reply_to_status_id`
+    and :code:`in_reply_sto_status_id_str` have the same name as Twitter defined them `here <https://dev.twitter.com/overview/api/tweets>`_.
+    :code:`retweeted_status` is renamed to :code:`retweeted_tweet`, similar for other properties above.
     """
     def __init__(self, data):
         """
@@ -44,6 +44,12 @@ class Tweet(object):
                 setattr(self, 'retweeted_tweet', Tweet(value))
             elif key == 'quoted_status':
                 setattr(self, 'quoted_tweet', Tweet(value))
+            elif key == 'quoted_status_id_str':
+                setattr(self, 'quoted_tweet_id_str', value)
+            elif key == 'in_reply_to_status_id':
+                setattr(self, 'in_reply_to_tweet_id', value)
+            elif key == 'in_reply_to_status_id_str':
+                setattr(self, 'in_reply_to_tweet_id_str', value)
             else:
                 setattr(self, key, value)
 
@@ -86,7 +92,7 @@ class TweetFilter(object):
         self.track = track
         self.follow = follow
 
-    def match_tweet(self, tweet):
+    def match_tweet(self, tweet, user_stream):
         """
         Check if a tweet matches the defined criteria
 
@@ -94,11 +100,23 @@ class TweetFilter(object):
         :type tweet: :class:`~responsebot.models.Tweet`
         :return: True if matched, False otherwise
         """
+        if user_stream:
+            if len(self.track) > 0:
+                return self.is_tweet_match_track(tweet)
+
+            return True
+        else:
+            return self.is_tweet_match_track(tweet) or self.is_tweet_match_follow(tweet)
+
+    def is_tweet_match_track(self, tweet):
         tweet_text = tweet.text.lower()
         for value in self.track:
             if value.lower() in tweet_text:
                 return True
 
+        return False
+
+    def is_tweet_match_follow(self, tweet):
         user_mentions = [x['id'] for x in tweet.entities.get('user_mentions', [])]
         for value in self.follow:
             int_value = int(value)

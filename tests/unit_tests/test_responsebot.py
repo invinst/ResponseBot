@@ -44,7 +44,7 @@ class ResponseBotTestCase(TestCase):
             self.assertTrue(mock_auth.called)
             self.assertTrue(mock_discover.called)
             mock_listener.assert_called_once_with(client=client, handler_classes=handler_classes)
-            mock_stream.assert_called_once_with(client=client, listener=listener, user_stream=False)
+            mock_stream.assert_called_once_with(client=client, listener=listener)
             mock_stream().start.assert_called_once_with()
 
     @patch('logging.error')
@@ -96,7 +96,7 @@ class ResponseBotTestCase(TestCase):
 
     @patch('logging.exception')
     def test_log_user_handler_error(self, mock_log):
-        exception = UserHandlerError('message')
+        exception = UserHandlerError(Exception('some exception'), msg='message')
         with patch('responsebot.responsebot.ResponseBotConfig'),\
                 patch('responsebot.utils.handler_utils.discover_handler_classes', return_value=[MagicMock]),\
                 patch('responsebot.utils.auth_utils.auth'),\

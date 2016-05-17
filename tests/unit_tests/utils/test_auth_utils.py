@@ -34,14 +34,14 @@ class AuthUtilsTestCase(TestCase):
             self.assertRaises(
                 AuthenticationError,
                 auth_utils.auth,
-                consumer_key='ck', consumer_secret='cs', token_key='tk', token_secret='ts'
+                MagicMock(get=MagicMock(side_effect=['ck', 'cs', 'tk', 'ts']))
             )
 
     @patch('responsebot.utils.auth_utils.tweepy.API.verify_credentials')
     @patch('responsebot.utils.auth_utils.tweepy.API.me', return_value=MagicMock(screen_name='me'))
     def test_successful_auth(self, mock_me, mock_verify):
         try:
-            client = auth_utils.auth(consumer_key='ck', consumer_secret='cs', token_key='tk', token_secret='ts')
+            client = auth_utils.auth(MagicMock(get=MagicMock(side_effect=['ck', 'cs', 'tk', 'ts'])))
         except AuthenticationError:
             self.fail('Expected no authentication error')
         else:

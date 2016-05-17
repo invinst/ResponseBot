@@ -28,14 +28,14 @@ class ResponseBotListenerTestCase(TestCase):
         handler_class_1 = MagicMock(return_value='handler 1')
         handler_class_2 = MagicMock(return_value='handler 2')
 
-        listener = ResponseBotListener(handler_classes=[handler_class_1, handler_class_2], client=None)
+        listener = ResponseBotListener(handler_classes=[handler_class_1, handler_class_2], client=MagicMock())
 
         self.assertEqual(listener.handlers, ['handler 1', 'handler 2'])
 
     def test_call_handlers_on_tweet(self):
         handler_1 = MagicMock(on_tweet=MagicMock())
         handler_2 = MagicMock(on_tweet=MagicMock())
-        listener = ResponseBotListener(handler_classes=[], client=None)
+        listener = ResponseBotListener(handler_classes=[], client=MagicMock())
         listener.handlers = [handler_1, handler_2]
 
         tweet = MagicMock(text='tweet')
@@ -47,14 +47,14 @@ class ResponseBotListenerTestCase(TestCase):
     def test_raise_user_handler_exception(self):
         handler_class = MagicMock(side_effect=Exception('some error'))
 
-        self.assertRaises(UserHandlerError, ResponseBotListener, handler_classes=[handler_class], client=None)
+        self.assertRaises(UserHandlerError, ResponseBotListener, handler_classes=[handler_class], client=MagicMock())
 
     def test_raise_user_handler_exception_on_tweet(self):
         handler_class = MagicMock()
         handler_class().on_tweet = MagicMock(side_effect=Exception('some error unknown'))
         tweet = MagicMock(text='tweet')
 
-        listener = ResponseBotListener(handler_classes=[handler_class], client=None)
+        listener = ResponseBotListener(handler_classes=[handler_class], client=MagicMock())
 
         self.assertRaises(UserHandlerError, listener.on_tweet, tweet=tweet)
 

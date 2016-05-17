@@ -28,7 +28,10 @@ from responsebot.responsebot_client import ResponseBotClient
 class SaveTweetHandlerTestCase(TestCase):
     def test_save_incoming_tweets(self):
         tweet = Tweet({'text': '@bot mornin', 'user': {'screen_name': 'some_bloke'}})
-        client = ResponseBotClient(client=MagicMock(me=MagicMock(return_value=MagicMock(_json={'id': 123}))))
+        client = ResponseBotClient(
+            client=MagicMock(me=MagicMock(return_value=MagicMock(_json={'id': 123}))),
+            config=MagicMock()
+        )
         mock_cursor = MagicMock()
 
         with patch('sqlite3.connect', return_value=MagicMock(cursor=MagicMock(return_value=mock_cursor))):

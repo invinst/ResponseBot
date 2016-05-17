@@ -33,7 +33,10 @@ class TweetModelTestCase(TestCase):
             },
             'quoted_status': {
                 'created_at': created_at,
-            }
+            },
+            'quoted_status_id_str': '123',
+            'in_reply_to_status_id': 123,
+            'in_reply_to_status_id_str': '123'
         }
 
         tweet = Tweet(raw)
@@ -51,3 +54,7 @@ class TweetModelTestCase(TestCase):
 
         self.assertTrue(isinstance(tweet.quoted_tweet, Tweet))
         self.assertEqual(tweet.quoted_tweet.created_at, expected_created_at)
+
+        self.assertEqual(tweet.quoted_tweet_id_str, '123')
+        self.assertEqual(tweet.in_reply_to_tweet_id, 123)
+        self.assertEqual(tweet.in_reply_to_tweet_id_str, '123')
