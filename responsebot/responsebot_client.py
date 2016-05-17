@@ -113,6 +113,13 @@ class ResponseBotClient(object):
             raise APIError(str(e))
 
     def follow(self, user_id, notify=False):
+        """
+        Follow a user.
+
+        :param user_id: ID of the user in question
+        :param notify: whether to notify the user about the following
+        :return: user that are followed
+        """
         try:
             return User(self._client.create_friendship(user_id, follow=notify)._json)
         except TweepError as e:

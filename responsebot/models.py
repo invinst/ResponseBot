@@ -23,9 +23,9 @@ from dateutil.parser import parse
 class Tweet(object):
     """
     Represents a tweet. E.g. you can get a tweet's text via it's :code:`text` property (:code:`tweet.text`).
-    All properties except :code:`retweeted_status` and :code:`quoted_status` have the same name as Twitter defined
-    them `here <https://dev.twitter.com/overview/api/tweets>`_. :code:`retweeted_status` is renamed to
-    :code:`retweeted_tweet` and :code:`quoted_status` is :code:`quoted_tweet`.
+    All properties except :code:`retweeted_status`, :code:`quoted_status`, :code:`quoted_status_id_str`, :code:`in_reply_to_status_id`
+    and :code:`in_reply_sto_status_id_str` have the same name as Twitter defined them `here <https://dev.twitter.com/overview/api/tweets>`_.
+    :code:`retweeted_status` is renamed to :code:`retweeted_tweet`, similar for other properties above.
     """
     def __init__(self, data):
         """

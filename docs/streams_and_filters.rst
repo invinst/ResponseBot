@@ -33,8 +33,7 @@ in your handlers' :code:`get_filter` method as follow:
 
 By default the `BaseTweetHandler <reference/responsebot.handlers.base.html#responsebot.handlers.base.BaseTweetHandler>`_
 returns a filter with the :code:`follow` parameter set as the bot's authenticated user and an empty :code:`track`
-parameter, which is equivalent to running the bot with :code:`user_stream` and provide no :code:`track` in your
-handlers.
+parameter.
 
 The :code:`follow` parameter will not be used if you use :code:`user_stream`. See more about
 `TweetFilter <reference/responsebot.models.html#responsebot.models.TweetFilter>`_
