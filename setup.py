@@ -20,10 +20,10 @@ setup(
 
     description='Automatically response to any tweets mentioning you',
 
-    url='https://github.com/EastAgile/twitterbot',
+    url='https://github.com/invinst/ResponseBot',
 
-    author='East Agile',
-    author_email='cpdb@eastagile.com',
+    author='Invisible Institute',
+    author_email='dev@invisibleinstitute.com',
 
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
 
