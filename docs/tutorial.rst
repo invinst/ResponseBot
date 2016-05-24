@@ -64,7 +64,7 @@ stream as follow:
 
    $ start_responsebot --user-stream
 
-See more about stream and filters `here <streams_and_filters.html>`_.
+See more about stream and filters `here <guides/streams_and_filters.html>`_.
 
 Handler
 -------
@@ -83,6 +83,9 @@ You can specify what kind of tweets the bot should listen to by returning an app
         return TweetFilter(track=['Donald Trump'], follow=['<your personal Twitter id>'])
 
 See what :code:`tweet` object contains in `reference <reference/responsebot.models.html#responsebot.models.Tweet>`_.
+
+If you're listening on user stream, you can catch non-tweet events (user following, etc.) as in
+`this tutorial <guides/user_event_handling.html>`_.
 
 Client
 ------

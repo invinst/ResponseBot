@@ -124,3 +124,40 @@ class TweetFilter(object):
                 return True
 
         return False
+
+
+class Event(object):
+    """
+    Represent a user events (e.g. following, unfollowing, etc.). See more `here <../guides/user_event_handling.html>`_
+    and `here <https://dev.twitter.com/streaming/overview/messages-types#Events_event>`_.
+    """
+    def __init__(self, data):
+        """
+        :param data: Parsed JSON data
+        :type data: dictionary
+        """
+        self.raw_data = data
+
+        for key, value in data.items():
+            if key == 'target':
+                setattr(self, key, User(value))
+            elif key == 'source':
+                setattr(self, key, User(value))
+            elif key == 'created_at':
+                setattr(self, key, parse(value))
+            else:
+                setattr(self, key, value)
+
+        setattr(self, 'target_object', self._parse_target_obj(data))
+
+    def _parse_target_obj(self, data):
+        # TODO: parse target obj base on event
+        if data['event'] in ['follow', 'unfollow', 'block', 'unblock', 'user_update']:
+            return None
+        elif data['event'] in ['favorite', 'unfavorite', 'quoted_tweet']:
+            return Tweet(data['target_object'])
+        elif data['event'] in ['list_created', 'list_destroyed', 'list_updated', 'list_member_added',
+                'list_member_removed', 'list_user_subscribed', 'list_user_unsubscribed']:
+            # TODO: parse as List object
+            return data['target_object']
+        return data.get('target_object')

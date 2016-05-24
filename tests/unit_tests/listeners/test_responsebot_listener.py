@@ -85,3 +85,25 @@ class ResponseBotListenerTestCase(TestCase):
 
         matched_handler.on_tweet.assert_called_once_with(tweet)
         unmatched_handler.on_tweet.assert_not_called()
+
+    def test_call_handlers_on_event(self):
+        handler_1 = MagicMock(on_event=MagicMock())
+        handler_2 = MagicMock(on_event=MagicMock())
+        listener = ResponseBotListener(handler_classes=[], client=MagicMock())
+        listener.handlers = [handler_1, handler_2]
+
+        event = MagicMock(event='follow')
+        listener.on_event(event)
+
+        handler_1.on_event.assert_called_once_with(event)
+        handler_2.on_event.assert_called_once_with(event)
+
+    def test_not_call_handlers_on_unknown_event(self):
+        handler = MagicMock(on_event=MagicMock())
+        listener = ResponseBotListener(handler_classes=[], client=MagicMock())
+        listener.handlers = [handler]
+
+        event = MagicMock(event='unknown')
+        listener.on_event(event)
+
+        handler.on_event.assert_not_called()

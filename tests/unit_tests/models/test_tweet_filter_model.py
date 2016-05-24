@@ -3,7 +3,7 @@ from unittest.case import TestCase
 from responsebot.models import TweetFilter, Tweet
 
 
-class TweetFilterTestCase(TestCase):
+class TweetFilterModelTestCase(TestCase):
     def setUp(self):
         self.filter = TweetFilter(track=['keyword'], follow=[123])
 

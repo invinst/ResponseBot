@@ -30,7 +30,8 @@ Contents:
 
    getting_started
    tutorial
-   streams_and_filters
+   guides/streams_and_filters
+   guides/user_event_handling
    reference
 
 Indices and tables

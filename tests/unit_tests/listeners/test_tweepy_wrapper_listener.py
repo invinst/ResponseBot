@@ -15,6 +15,7 @@
 from unittest.case import TestCase
 
 from responsebot.listeners.tweepy_wrapper_listener import TweepyWrapperListener
+from responsebot.models import Event
 
 try:
     from mock import MagicMock, patch
@@ -33,3 +34,13 @@ class TweepyWrapperListenerTestCase(TestCase):
 
             mock_tweet_obj.assert_called_once_with(status._json)
             generic_listener.on_tweet.assert_called_once_with(tweet_obj)
+
+    def test_call_generic_listener_on_event(self):
+        generic_listener = MagicMock(on_event=MagicMock())
+        event = MagicMock(_json={})
+        event_wrapper = Event(event)
+
+        with patch('responsebot.listeners.tweepy_wrapper_listener.Event', return_value=event_wrapper):
+            TweepyWrapperListener(listener=generic_listener).on_event(event)
+
+            generic_listener.on_event.assert_called_once_with(event_wrapper)
