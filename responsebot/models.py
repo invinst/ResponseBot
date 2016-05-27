@@ -158,6 +158,25 @@ class Event(object):
             return Tweet(data['target_object'])
         elif data['event'] in ['list_created', 'list_destroyed', 'list_updated', 'list_member_added',
                 'list_member_removed', 'list_user_subscribed', 'list_user_unsubscribed']:
-            # TODO: parse as List object
-            return data['target_object']
+            return List(data['target_object'])
         return data.get('target_object')
+
+
+class List(object):
+    """
+    Represent a user list.
+    """
+    def __init__(self, data):
+        """
+        :param data: Parsed JSON data
+        :type data: dictionary
+        """
+        self.raw_data = data
+
+        for key, value in data.items():
+            if key == 'user':
+                setattr(self, key, User(value))
+            elif key == 'created_at':
+                setattr(self, key, parse(value))
+            else:
+                setattr(self, key, value)

@@ -2,7 +2,7 @@ from unittest.case import TestCase
 
 from dateutil.parser import parse
 
-from responsebot.models import Event, User, Tweet
+from responsebot.models import Event, User, Tweet, List
 
 
 class EventModelTestCase(TestCase):
@@ -63,8 +63,8 @@ class EventModelTestCase(TestCase):
             }
             event = Event(raw_event)
             # TODO: will update test after creating List model
-            self.assertTrue(isinstance(event.target_object, dict))
-            self.assertEqual(event.target_object['something'], 'some value')
+            self.assertTrue(isinstance(event.target_object, List))
+            self.assertEqual(event.target_object.something, 'some value')
 
         for event_type in ['access_revoked']:
             raw_event = {
