@@ -14,6 +14,7 @@
 
 import logging
 
+from responsebot.common.constants import TWITTER_NON_TWEET_EVENTS
 from responsebot.common.exceptions import UserHandlerError
 from responsebot.models import TweetFilter
 
@@ -71,6 +72,29 @@ class ResponseBotListener(object):
 
             try:
                 handler.on_tweet(tweet)
+            except Exception as e:
+                # Catch all exception from user handler
+                raise UserHandlerError(user_exception=e)
+
+    def on_event(self, event):
+        """
+        Callback to receive events from :class:`~responsebot.responsebot_stream.ResponseBotStream`. Tries to forward the
+        received event to registered handlers.
+
+        :param event: The received event
+        :type event: :class:`~responsebot.models.Event`
+        :raises :class:`~responsebot.common.exceptions.UserHandlerError`: If there is some unknown
+        error from a custom handler
+        """
+        if event.event not in TWITTER_NON_TWEET_EVENTS:
+            logging.warning(u'Received unknown twitter event {event}'.format(event=event.event))
+            return
+
+        logging.info(u'Received event {event}'.format(event=event.event))
+
+        for handler in self.handlers:
+            try:
+                handler.on_event(event)
             except Exception as e:
                 # Catch all exception from user handler
                 raise UserHandlerError(user_exception=e)

@@ -14,11 +14,13 @@
 
 from unittest.case import TestCase
 
-from tweepy.error import TweepError
+from datetime import datetime
+from tweepy.error import TweepError, RateLimitError
 
 from responsebot.common.constants import TWITTER_TWEET_NOT_FOUND_ERROR, TWITTER_USER_NOT_FOUND_ERROR, \
-    TWITTER_PAGE_DOES_NOT_EXISTS_ERROR, TWITTER_DELETE_OTHER_USER_TWEET, TWITTER_ACCOUNT_SUSPENDED_ERROR
-from responsebot.common.exceptions import APIError
+    TWITTER_PAGE_DOES_NOT_EXISTS_ERROR, TWITTER_DELETE_OTHER_USER_TWEET, TWITTER_ACCOUNT_SUSPENDED_ERROR, \
+    TWITTER_USER_IS_NOT_LIST_MEMBER_SUBSCRIBER
+from responsebot.common.exceptions import APIError, APIQuotaError
 from responsebot.responsebot_client import ResponseBotClient
 
 try:
@@ -200,3 +202,311 @@ class TweetClientTestCase(TestCase):
         self.real_client.create_friendship = MagicMock(side_effect=TweepError(reason='unknown'))
 
         self.assertRaises(APIError, self.client.follow, 123)
+
+    def test_create_list(self):
+        api_return = self.check_api_call_success(
+            api='create_list',
+            params={'name': 'some list'},
+            mock_api='create_list',
+            mock_api_params={
+                'name': 'some list',
+                'mode': 'public',
+                'description': None
+            },
+            mock_api_return=MagicMock(
+                something='something else',
+                _api='api',
+                created_at=datetime.now(),
+                user=MagicMock()
+            )
+        )
+        self.assertEqual(api_return.something, 'something else')
+
+        self.check_api_call_errors(api='create_list', params={'name': 'some list'}, mock_api='create_list')
+
+    def test_destroy_list(self):
+        api_return = self.check_api_call_success(
+            api='destroy_list',
+            params={'list_id': 123},
+            mock_api='destroy_list',
+            mock_api_params={'list_id': 123},
+            mock_api_return=MagicMock(
+                something='something else',
+                _api='api',
+                created_at=datetime.now(),
+                user=MagicMock()
+            )
+        )
+        self.assertEqual(api_return.something, 'something else')
+
+        self.check_api_call_errors(api='destroy_list', params={'list_id': 123}, mock_api='destroy_list')
+
+    def test_update_list(self):
+        api_return = self.check_api_call_success(
+            api='update_list',
+            params={'list_id': 123, 'name': 'new name'},
+            mock_api='update_list',
+            mock_api_params={
+                'list_id': 123,
+                'name': 'new name',
+                'mode': None,
+                'description': None
+            },
+            mock_api_return=MagicMock(
+                something='something else',
+                _api='api',
+                created_at=datetime.now(),
+                user=MagicMock()
+            )
+        )
+        self.assertEqual(api_return.something, 'something else')
+
+        self.check_api_call_errors(api='update_list', params={
+            'list_id': 123,
+            'name': 'new name'
+        }, mock_api='update_list')
+
+    def test_lists(self):
+        api_return = self.check_api_call_success(
+            api='lists',
+            params={},
+            mock_api='lists_all',
+            mock_api_params={},
+            mock_api_return=[MagicMock(
+                something='something else',
+                _api='api',
+                created_at=datetime.now(),
+                user=MagicMock()
+            )]
+        )
+        self.assertEqual(api_return[0].something, 'something else')
+
+        self.check_api_call_errors(api='lists', params={}, mock_api='lists_all')
+
+    def test_lists_memberships(self):
+        api_return = self.check_api_call_success(
+            api='lists_memberships',
+            params={},
+            mock_api='lists_memberships',
+            mock_api_params={},
+            mock_api_return=[MagicMock(
+                something='something else',
+                _api='api',
+                created_at=datetime.now(),
+                user=MagicMock()
+            )]
+        )
+        self.assertEqual(api_return[0].something, 'something else')
+
+        self.check_api_call_errors(api='lists_memberships', params={}, mock_api='lists_memberships')
+
+    def test_lists_subscriptions(self):
+        api_return = self.check_api_call_success(
+            api='lists_subscriptions',
+            params={},
+            mock_api='lists_subscriptions',
+            mock_api_params={},
+            mock_api_return=[MagicMock(
+                something='something else',
+                _api='api',
+                created_at=datetime.now(),
+                user=MagicMock()
+            )]
+        )
+        self.assertEqual(api_return[0].something, 'something else')
+
+        self.check_api_call_errors(api='lists_subscriptions', params={}, mock_api='lists_subscriptions')
+
+    def test_list_timeline(self):
+        api_return = self.check_api_call_success(
+            api='list_timeline',
+            params={'list_id': 123},
+            mock_api='list_timeline',
+            mock_api_params={'list_id': 123, 'since_id': None, 'max_id': None, 'count': 20},
+            mock_api_return=[MagicMock(_json={'something': 'something else'})]
+        )
+        self.assertEqual(api_return[0].something, 'something else')
+
+        self.check_api_call_errors(api='list_timeline', params={'list_id': 123}, mock_api='list_timeline')
+
+    def test_get_list(self):
+        api_return = self.check_api_call_success(
+            api='get_list',
+            params={'list_id': 123},
+            mock_api='get_list',
+            mock_api_params={'list_id': 123},
+            mock_api_return=MagicMock(
+                something='something else',
+                _api='api',
+                created_at=datetime.now(),
+                user=MagicMock()
+            )
+        )
+        self.assertEqual(api_return.something, 'something else')
+
+        self.check_api_call_errors(api='get_list', params={'list_id': 123}, mock_api='get_list')
+
+    def test_add_list_member(self):
+        api_return = self.check_api_call_success(
+                api='add_list_member',
+                params={'list_id': 123, 'user_id': 456},
+                mock_api='add_list_member',
+                mock_api_params={'list_id': 123, 'user_id': 456},
+                mock_api_return=MagicMock(
+                    something='something else',
+                    _api='api',
+                    created_at=datetime.now(),
+                    user=MagicMock())
+        )
+        self.assertEqual(api_return.something, 'something else')
+
+        self.check_api_call_errors(api='add_list_member', params={'list_id': 123, 'user_id': 456},
+                                   mock_api='add_list_member')
+
+    def test_remove_list_member(self):
+        api_return = self.check_api_call_success(
+            api='remove_list_member',
+            params={'list_id': 123, 'user_id': 456},
+            mock_api='remove_list_member',
+            mock_api_params={'list_id': 123, 'user_id': 456},
+            mock_api_return=MagicMock(
+                something='something else',
+                _api='api',
+                created_at=datetime.now(),
+                user=MagicMock())
+        )
+        self.assertEqual(api_return.something, 'something else')
+
+        self.check_api_call_errors(api='remove_list_member', params={'list_id': 123, 'user_id': 456},
+                                   mock_api='remove_list_member')
+
+    def test_list_members(self):
+        api_return = self.check_api_call_success(
+            api='list_members',
+            params={'list_id': 123},
+            mock_api='list_members',
+            mock_api_params={'list_id': 123},
+            mock_api_return=[MagicMock(_json={
+                'something': 'something else'})]
+        )
+        self.assertEqual(api_return[0].something, 'something else')
+
+        self.check_api_call_errors(api='list_members', params={'list_id': 123},
+                                   mock_api='list_members')
+
+    def test_is_list_member(self):
+        api_return = self.check_api_call_success(
+            api='is_list_member',
+            params={'list_id': 123, 'user_id': 456},
+            mock_api='show_list_member',
+            mock_api_params={'list_id': 123, 'user_id': 456},
+            mock_api_return=MagicMock()
+        )
+        self.assertEqual(api_return, True)
+
+        api_return = self.check_api_call_success(
+            api='is_list_member',
+            params={'list_id': 123, 'user_id': 456},
+            mock_api='show_list_member',
+            mock_api_params={'list_id': 123, 'user_id': 456},
+            mock_api_return=None,
+            mock_api_effect=TweepError(api_code=TWITTER_USER_IS_NOT_LIST_MEMBER_SUBSCRIBER, reason='unknown')
+        )
+        self.assertEqual(api_return, False)
+
+        self.check_api_call_errors(api='is_list_member', params={'list_id': 123, 'user_id': 456},
+                                   mock_api='show_list_member')
+
+    def test_subscribe_list(self):
+        api_return = self.check_api_call_success(
+            api='subscribe_list',
+            params={'list_id': 123},
+            mock_api='subscribe_list',
+            mock_api_params={'list_id': 123},
+            mock_api_return=MagicMock(
+                something='something else',
+                _api='api',
+                created_at=datetime.now(),
+                user=MagicMock()
+            )
+        )
+        self.assertEqual(api_return.something, 'something else')
+
+        self.check_api_call_errors(api='subscribe_list', params={'list_id': 123},
+                                   mock_api='subscribe_list')
+
+    def test_unsubscribe_list(self):
+        api_return = self.check_api_call_success(
+            api='unsubscribe_list',
+            params={'list_id': 123},
+            mock_api='unsubscribe_list',
+            mock_api_params={'list_id': 123},
+            mock_api_return=MagicMock(
+                something='something else',
+                _api='api',
+                created_at=datetime.now(),
+                user=MagicMock()
+            )
+        )
+        self.assertEqual(api_return.something, 'something else')
+
+        self.check_api_call_errors(api='unsubscribe_list', params={'list_id': 123},
+                                   mock_api='unsubscribe_list')
+
+    def test_list_subscribers(self):
+        api_return = self.check_api_call_success(
+            api='list_subscribers',
+            params={'list_id': 123},
+            mock_api='list_subscribers',
+            mock_api_params={'list_id': 123},
+            mock_api_return=[MagicMock(_json={'something': 'something else'})]
+        )
+        self.assertEqual(api_return[0].something, 'something else')
+
+        self.check_api_call_errors(api='list_subscribers', params={'list_id': 123},
+                                   mock_api='list_subscribers')
+
+    def test_is_subscribed_list(self):
+        api_return = self.check_api_call_success(
+            api='is_subscribed_list',
+            params={'list_id': 123, 'user_id': 456},
+            mock_api='show_list_subscriber',
+            mock_api_params={'list_id': 123, 'user_id': 456},
+            mock_api_return=MagicMock()
+        )
+        self.assertEqual(api_return, True)
+
+        api_return = self.check_api_call_success(
+            api='is_subscribed_list',
+            params={'list_id': 123, 'user_id': 456},
+            mock_api='show_list_subscriber',
+            mock_api_params={'list_id': 123, 'user_id': 456},
+            mock_api_return=None,
+            mock_api_effect=TweepError(api_code=TWITTER_USER_IS_NOT_LIST_MEMBER_SUBSCRIBER, reason='unknown')
+        )
+        self.assertEqual(api_return, False)
+
+        self.check_api_call_errors(api='is_subscribed_list', params={'list_id': 123, 'user_id': 456},
+                                   mock_api='show_list_subscriber')
+
+    def check_api_call_errors(self, api, params, mock_api):
+        setattr(self.real_client, mock_api, MagicMock(side_effect=TweepError(reason='unknown')))
+        self.assertRaises(APIError, getattr(self.client, api), **params)
+
+        setattr(self.real_client, mock_api, MagicMock(side_effect=RateLimitError(reason='unknown')))
+        self.assertRaises(APIQuotaError, getattr(self.client, api), **params)
+
+    def check_api_call_success(self, api, params, mock_api, mock_api_params, mock_api_return, mock_api_effect=None):
+        if not mock_api_effect:
+            setattr(self.real_client, mock_api, MagicMock(return_value=mock_api_return))
+        else:
+            setattr(self.real_client, mock_api, MagicMock(side_effect=mock_api_effect))
+
+        try:
+            api_return = getattr(self.client, api)(**params)
+
+            getattr(self.real_client, mock_api).assert_called_once_with(**mock_api_params)
+
+            return api_return
+        except (APIError, APIQuotaError):
+            self.fail('Expect no API error or API quota error')

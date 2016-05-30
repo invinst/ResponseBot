@@ -27,3 +27,4 @@ responsebot.models
       Tweet
       User
       TweetFilter
+      Event
