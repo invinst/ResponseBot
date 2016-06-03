@@ -19,8 +19,8 @@ from tweepy.error import TweepError, RateLimitError
 
 from responsebot.common.constants import TWITTER_PAGE_DOES_NOT_EXISTS_ERROR, TWITTER_TWEET_NOT_FOUND_ERROR, \
     TWITTER_USER_NOT_FOUND_ERROR, TWITTER_DELETE_OTHER_USER_TWEET, TWITTER_ACCOUNT_SUSPENDED_ERROR,\
-    TWITTER_USER_IS_NOT_LIST_MEMBER_SUBSCRIBER
-from responsebot.common.exceptions import APIError, APIQuotaError
+    TWITTER_USER_IS_NOT_LIST_MEMBER_SUBSCRIBER, TWITTER_CHARACTER_LIMIT, TWITTER_DUPLICATED_TWEET_ERROR
+from responsebot.common.exceptions import APIError, APIQuotaError, TweetError
 from responsebot.models import Tweet, User, List
 from responsebot.utils.tweepy import tweepy_list_to_json
 
@@ -64,9 +64,17 @@ class ResponseBotClient(object):
         Post a new tweet.
         :param text: the text to post
         :param in_reply_to: The ID of the tweet to reply to
+        :raise TweetError: if the tweet exceeds Twitter's character limit or the tweet is duplicated
         :return: Tweet object
         """
-        return Tweet(self._client.update_status(status=text, in_reply_to_status_id=in_reply_to)._json)
+        if len(text) > TWITTER_CHARACTER_LIMIT:
+            raise TweetError(reason="Message exceeds Twitter's character limit")
+
+        try:
+            return Tweet(self._client.update_status(status=text, in_reply_to_status_id=in_reply_to)._json)
+        except TweepError as e:
+            if e.api_code == TWITTER_DUPLICATED_TWEET_ERROR:
+                raise TweetError(reason='Duplicated tweet')
 
     def retweet(self, id):
         """
