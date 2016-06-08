@@ -65,7 +65,7 @@ class ResponseBotClient(object):
         :param text: the text to post
         :return: Tweet object
         """
-        return Tweet(self._client.update_status(text)._json)
+        return Tweet(self._client.update_status(status=text)._json)
 
     def retweet(self, id):
         """
@@ -75,7 +75,7 @@ class ResponseBotClient(object):
         :return: True if success, False otherwise
         """
         try:
-            self._client.retweet(id)
+            self._client.retweet(id=id)
             return True
         except TweepError as e:
             if e.api_code == TWITTER_PAGE_DOES_NOT_EXISTS_ERROR:
@@ -90,7 +90,7 @@ class ResponseBotClient(object):
         :return: Tweet object. None if not found
         """
         try:
-            return Tweet(self._client.get_status(id)._json)
+            return Tweet(self._client.get_status(id=id)._json)
         except TweepError as e:
             if e.api_code == TWITTER_TWEET_NOT_FOUND_ERROR:
                 return None
@@ -104,7 +104,7 @@ class ResponseBotClient(object):
         :return: User object. None if not found
         """
         try:
-            return User(self._client.get_user(id)._json)
+            return User(self._client.get_user(user_id=id)._json)
         except TweepError as e:
             if e.api_code == TWITTER_USER_NOT_FOUND_ERROR:
                 return None
@@ -118,7 +118,7 @@ class ResponseBotClient(object):
         :return: True if success, False otherwise
         """
         try:
-            self._client.destroy_status(id)
+            self._client.destroy_status(id=id)
             return True
         except TweepError as e:
             if e.api_code in [TWITTER_PAGE_DOES_NOT_EXISTS_ERROR, TWITTER_DELETE_OTHER_USER_TWEET]:
@@ -134,10 +134,21 @@ class ResponseBotClient(object):
         :return: user that are followed
         """
         try:
-            return User(self._client.create_friendship(user_id, follow=notify)._json)
+            return User(self._client.create_friendship(user_id=user_id, follow=notify)._json)
         except TweepError as e:
             if e.api_code in [TWITTER_ACCOUNT_SUSPENDED_ERROR]:
                 return self.get_user(user_id)
+            raise APIError(str(e))
+
+    def unfollow(self, user_id):
+        """
+        Follow a user.
+        :param user_id: ID of the user in question
+        :return: The user that were unfollowed
+        """
+        try:
+            return User(self._client.destroy_friendship(user_id=user_id)._json)
+        except TweepError as e:
             raise APIError(str(e))
 
     ###################################################################################

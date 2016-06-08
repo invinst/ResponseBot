@@ -42,7 +42,7 @@ class TweetClientTestCase(TestCase):
 
         tweet = self.client.tweet('some text')
 
-        self.real_client.update_status.assert_called_once_with('some text')
+        self.real_client.update_status.assert_called_once_with(status='some text')
         self.assertEqual(tweet.some_key, 'some value')
 
     def test_get_tweet(self):
@@ -52,7 +52,7 @@ class TweetClientTestCase(TestCase):
 
         tweet = self.client.get_tweet(123)
 
-        self.real_client.get_status.assert_called_once_with(123)
+        self.real_client.get_status.assert_called_once_with(id=123)
         self.assertEqual(tweet.some_key, 'some value')
 
     def test_get_non_existent_tweet(self):
@@ -63,7 +63,7 @@ class TweetClientTestCase(TestCase):
 
         tweet = self.client.get_tweet(123)
 
-        self.real_client.get_status.assert_called_once_with(123)
+        self.real_client.get_status.assert_called_once_with(id=123)
         self.assertIsNone(tweet)
 
     def test_get_tweet_encounter_error(self):
@@ -80,7 +80,7 @@ class TweetClientTestCase(TestCase):
 
         user = self.client.get_user(123)
 
-        self.real_client.get_user.assert_called_once_with(123)
+        self.real_client.get_user.assert_called_once_with(user_id=123)
         self.assertEqual(user.some_key, 'some value')
 
     def test_get_non_existent_user(self):
@@ -91,7 +91,7 @@ class TweetClientTestCase(TestCase):
 
         user = self.client.get_user(123)
 
-        self.real_client.get_user.assert_called_once_with(123)
+        self.real_client.get_user.assert_called_once_with(user_id=123)
         self.assertIsNone(user)
 
     def test_get_user_encounter_error(self):
@@ -124,7 +124,7 @@ class TweetClientTestCase(TestCase):
 
         result = self.client.remove_tweet(123)
 
-        self.real_client.destroy_status.assert_called_once_with(123)
+        self.real_client.destroy_status.assert_called_once_with(id=123)
         self.assertTrue(result)
 
     def test_remove_non_existent_tweet(self):
@@ -135,7 +135,7 @@ class TweetClientTestCase(TestCase):
 
         result = self.client.remove_tweet(123)
 
-        self.real_client.destroy_status.assert_called_once_with(123)
+        self.real_client.destroy_status.assert_called_once_with(id=123)
         self.assertFalse(result)
 
     def test_remove_others_tweet(self):
@@ -146,7 +146,7 @@ class TweetClientTestCase(TestCase):
 
         result = self.client.remove_tweet(123)
 
-        self.real_client.destroy_status.assert_called_once_with(123)
+        self.real_client.destroy_status.assert_called_once_with(id=123)
         self.assertFalse(result)
 
     def test_remove_tweet_encounter_error(self):
@@ -161,7 +161,7 @@ class TweetClientTestCase(TestCase):
 
         result = self.client.retweet(123)
 
-        self.real_client.retweet.assert_called_once_with(123)
+        self.real_client.retweet.assert_called_once_with(id=123)
         self.assertTrue(result)
 
     def test_retweet_non_existent_tweet(self):
@@ -170,7 +170,7 @@ class TweetClientTestCase(TestCase):
 
         result = self.client.retweet(123)
 
-        self.real_client.retweet.assert_called_once_with(123)
+        self.real_client.retweet.assert_called_once_with(id=123)
         self.assertFalse(result)
 
     def test_retweet_encounter_error(self):
@@ -185,7 +185,7 @@ class TweetClientTestCase(TestCase):
 
         user = self.client.follow(123, notify=True)
 
-        self.real_client.create_friendship.assert_called_once_with(123, follow=True)
+        self.real_client.create_friendship.assert_called_once_with(user_id=123, follow=True)
         self.assertEqual(user.some_key, 'some value')
 
     def test_follow_user_403(self):
@@ -195,13 +195,26 @@ class TweetClientTestCase(TestCase):
 
         user = self.client.follow(123, notify=True)
 
-        self.real_client.create_friendship.assert_called_once_with(123, follow=True)
+        self.real_client.create_friendship.assert_called_once_with(user_id=123, follow=True)
         self.assertEqual(user.some_key, 'some value')
 
     def test_follow_user_unknown_exception(self):
         self.real_client.create_friendship = MagicMock(side_effect=TweepError(reason='unknown'))
 
         self.assertRaises(APIError, self.client.follow, 123)
+
+    def test_unfollow_user(self):
+        self.real_client.destroy_friendship = MagicMock(return_value=MagicMock(_json={'some_key': 'some value'}))
+
+        user = self.client.unfollow(123)
+
+        self.real_client.destroy_friendship.assert_called_once_with(user_id=123)
+        self.assertEqual(user.some_key, 'some value')
+
+    def test_unfollow_non_existent_user(self):
+        self.real_client.destroy_friendship = MagicMock(side_effect=TweepError(reason='page not exists', api_code=34))
+
+        self.assertRaises(APIError, self.client.unfollow, 123)
 
     def test_create_list(self):
         api_return = self.check_api_call_success(
