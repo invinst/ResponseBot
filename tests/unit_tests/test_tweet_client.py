@@ -42,7 +42,17 @@ class TweetClientTestCase(TestCase):
 
         tweet = self.client.tweet('some text')
 
-        self.real_client.update_status.assert_called_once_with(status='some text')
+        self.real_client.update_status.assert_called_once_with(status='some text', in_reply_to_status_id=None)
+        self.assertEqual(tweet.some_key, 'some value')
+
+    def test_reply(self):
+        self.real_client.update_status = MagicMock(return_value=MagicMock(_json={
+            'some_key': 'some value',
+        }))
+
+        tweet = self.client.tweet('some text', in_reply_to=123)
+
+        self.real_client.update_status.assert_called_once_with(status='some text', in_reply_to_status_id=123)
         self.assertEqual(tweet.some_key, 'some value')
 
     def test_get_tweet(self):

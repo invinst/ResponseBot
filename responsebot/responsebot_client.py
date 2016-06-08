@@ -59,14 +59,14 @@ class ResponseBotClient(object):
             self._current_user = User(self._client.me()._json)
         return self._current_user
 
-    def tweet(self, text):
+    def tweet(self, text, in_reply_to=None):
         """
         Post a new tweet.
-
         :param text: the text to post
+        :param in_reply_to: The ID of the tweet to reply to
         :return: Tweet object
         """
-        return Tweet(self._client.update_status(status=text)._json)
+        return Tweet(self._client.update_status(status=text, in_reply_to_status_id=in_reply_to)._json)
 
     def retweet(self, id):
         """
