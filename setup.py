@@ -16,7 +16,7 @@ setup(
     # - MAJOR version when they make incompatible API changes,
     # - MINOR version when they add functionality in a backwards-compatible manner, and
     # - MAINTENANCE version when they make backwards-compatible bug fixes.
-    version='0.2.5',
+    version='0.2.6',
 
     description='Automatically response to any tweets mentioning you',
 
@@ -33,6 +33,7 @@ setup(
         'python-dotenv',
         'python-dateutil',
         'future',
+        'decorator',
     ],
 
     # Settings for testing purpose

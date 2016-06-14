@@ -14,6 +14,7 @@
 
 from __future__ import absolute_import
 
+from decorator import decorate
 from tweepy.error import TweepError, RateLimitError
 
 from responsebot.common.constants import TWITTER_PAGE_DOES_NOT_EXISTS_ERROR, TWITTER_TWEET_NOT_FOUND_ERROR, \
@@ -25,15 +26,15 @@ from responsebot.utils.tweepy import tweepy_list_to_json
 
 
 def api_error_handle(func):
-    def func_wrapper(*args, **kwargs):
+    def func_wrapper(f, *args, **kwargs):
         try:
-            return func(*args, **kwargs)
+            return f(*args, **kwargs)
         except RateLimitError as e:
             raise APIQuotaError(str(e))
         except TweepError as e:
             raise APIError(str(e))
 
-    return func_wrapper
+    return decorate(func, func_wrapper)
 
 class ResponseBotClient(object):
     """
