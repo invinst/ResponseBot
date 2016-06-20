@@ -69,3 +69,15 @@ class UserHandlerError(ResponseBotError):
     def __init__(self, user_exception, msg='Error from user handler', *args, **kwargs):
         super(UserHandlerError, self).__init__(msg, *args, **kwargs)
         self.__cause__ = user_exception
+
+
+class TweetError(ResponseBotError):
+    """
+    Error to indicate some violation of Twitter's tweet constraints (max characters, etc.)
+    """
+    def __init__(self, reason, *args, **kwargs):
+        super(TweetError, self).__init__(*args, **kwargs)
+        self.reason = reason
+
+    def __str__(self):
+        return self.reason
