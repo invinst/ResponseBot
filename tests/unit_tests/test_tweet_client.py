@@ -20,7 +20,7 @@ from tweepy.error import TweepError, RateLimitError
 from responsebot.common.constants import TWITTER_TWEET_NOT_FOUND_ERROR, TWITTER_USER_NOT_FOUND_ERROR, \
     TWITTER_PAGE_DOES_NOT_EXISTS_ERROR, TWITTER_DELETE_OTHER_USER_TWEET, TWITTER_ACCOUNT_SUSPENDED_ERROR, \
     TWITTER_USER_IS_NOT_LIST_MEMBER_SUBSCRIBER
-from responsebot.common.exceptions import APIError, APIQuotaError, TweetError
+from responsebot.common.exceptions import APIError, APIQuotaError
 from responsebot.responsebot_client import ResponseBotClient
 
 try:
@@ -56,20 +56,31 @@ class TweetClientTestCase(TestCase):
         self.assertEqual(tweet.some_key, 'some value')
 
     def test_post_new_tweet_exceed_character_limit(self):
-        self.assertRaisesRegexp(
-            TweetError,
-            "Message exceeds Twitter's character limit",
+        self.real_client.update_status = MagicMock(
+            side_effect=TweepError(api_code=186, reason='Status is more than 140 characters.'))
+
+        self.assertRaises(
+            APIError,
             self.client.tweet,
-            text=''.join(['a' for _ in range(141)])
+            text="some text with more than Twitter's character limit"
         )
 
     def test_post_new_tweet_duplicated(self):
         self.real_client.update_status = MagicMock(
             side_effect=TweepError(api_code=187, reason='Status is a duplicate.'))
 
-        self.assertRaisesRegexp(
-            TweetError,
-            "Duplicated tweet",
+        self.assertRaises(
+            APIError,
+            self.client.tweet,
+            text='some text'
+        )
+
+    def test_post_new_tweet_unknown_tweet_error(self):
+        self.real_client.update_status = MagicMock(
+            side_effect=TweepError(api_code=-1, reason='Unknown'))
+
+        self.assertRaises(
+            APIError,
             self.client.tweet,
             text='some text'
         )
