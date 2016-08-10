@@ -19,8 +19,10 @@ from tweepy.error import TweepError, RateLimitError
 
 from responsebot.common.constants import TWITTER_PAGE_DOES_NOT_EXISTS_ERROR, TWITTER_TWEET_NOT_FOUND_ERROR, \
     TWITTER_USER_NOT_FOUND_ERROR, TWITTER_DELETE_OTHER_USER_TWEET, TWITTER_ACCOUNT_SUSPENDED_ERROR,\
-    TWITTER_USER_IS_NOT_LIST_MEMBER_SUBSCRIBER
-from responsebot.common.exceptions import APIError, APIQuotaError
+    TWITTER_USER_IS_NOT_LIST_MEMBER_SUBSCRIBER, TWITTER_AUTOMATED_REQUEST_ERROR, TWITTER_OVER_CAPACITY_ERROR,\
+    TWITTER_DAILY_STATUS_UPDATE_LIMIT_ERROR, TWITTER_CHARACTER_LIMIT_ERROR_1, TWITTER_CHARACTER_LIMIT_ERROR_2
+from responsebot.common.exceptions import APIError, APIQuotaError, AutomatedRequestError, OverCapacityError,\
+    DailyStatusUpdateError, CharacterLimitError
 from responsebot.models import Tweet, User, List
 from responsebot.utils.tweepy import tweepy_list_to_json
 
@@ -32,7 +34,16 @@ def api_error_handle(func):
         except RateLimitError as e:
             raise APIQuotaError(str(e))
         except TweepError as e:
-            raise APIError(str(e))
+            if e.api_code == TWITTER_AUTOMATED_REQUEST_ERROR:
+                raise AutomatedRequestError
+            elif e.api_code == TWITTER_OVER_CAPACITY_ERROR:
+                raise OverCapacityError
+            elif e.api_code in [TWITTER_CHARACTER_LIMIT_ERROR_1, TWITTER_CHARACTER_LIMIT_ERROR_2]:
+                raise CharacterLimitError
+            elif e.api_code == TWITTER_DAILY_STATUS_UPDATE_LIMIT_ERROR:
+                raise DailyStatusUpdateError
+            else:
+                raise APIError(str(e))
 
     return decorate(func, func_wrapper)
 
