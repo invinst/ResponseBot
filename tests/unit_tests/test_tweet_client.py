@@ -20,7 +20,8 @@ from tweepy.error import TweepError, RateLimitError
 from responsebot.common.constants import TWITTER_TWEET_NOT_FOUND_ERROR, TWITTER_USER_NOT_FOUND_ERROR, \
     TWITTER_PAGE_DOES_NOT_EXISTS_ERROR, TWITTER_DELETE_OTHER_USER_TWEET, TWITTER_ACCOUNT_SUSPENDED_ERROR, \
     TWITTER_USER_IS_NOT_LIST_MEMBER_SUBSCRIBER
-from responsebot.common.exceptions import APIError, APIQuotaError
+from responsebot.common.exceptions import APIError, APIQuotaError, CharacterLimitError, AutomatedRequestError,\
+    OverCapacityError, DailyStatusUpdateError
 from responsebot.responsebot_client import ResponseBotClient
 
 try:
@@ -60,7 +61,37 @@ class TweetClientTestCase(TestCase):
             side_effect=TweepError(api_code=186, reason='Status is more than 140 characters.'))
 
         self.assertRaises(
-            APIError,
+            CharacterLimitError,
+            self.client.tweet,
+            text="some text with more than Twitter's character limit"
+        )
+
+    def test_post_new_tweet_automated_error(self):
+        self.real_client.update_status = MagicMock(
+            side_effect=TweepError(api_code=226, reason='Automated'))
+
+        self.assertRaises(
+            AutomatedRequestError,
+            self.client.tweet,
+            text="some text with more than Twitter's character limit"
+        )
+
+    def test_post_new_tweet_twitter_over_capacity(self):
+        self.real_client.update_status = MagicMock(
+            side_effect=TweepError(api_code=130, reason='Over capacity'))
+
+        self.assertRaises(
+            OverCapacityError,
+            self.client.tweet,
+            text="some text with more than Twitter's character limit"
+        )
+
+    def test_post_new_tweet_hit_daily_update_limit(self):
+        self.real_client.update_status = MagicMock(
+            side_effect=TweepError(api_code=185, reason='Daily update limit reached'))
+
+        self.assertRaises(
+            DailyStatusUpdateError,
             self.client.tweet,
             text="some text with more than Twitter's character limit"
         )

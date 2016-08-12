@@ -45,4 +45,5 @@ class StartResponseBotCommandTestCase(TestCase):
             ])
 
             mock_responsebot.assert_called_once_with(auth=(consumer_key, consumer_secret, token_key, token_secret),
-                                                     handlers_package=handlers_package, user_stream=False)
+                                                     handlers_package=handlers_package, min_seconds_between_errors=None,
+                                                     sleep_seconds_on_consecutive_errors=None, user_stream=False)

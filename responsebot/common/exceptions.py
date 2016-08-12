@@ -43,6 +43,34 @@ class AuthenticationError(ResponseBotError):
     pass
 
 
+class AutomatedRequestError(ResponseBotError):
+    """
+    Error to indicate a request is deemed automated by Twitter.
+    """
+    pass
+
+
+class OverCapacityError(ResponseBotError):
+    """
+    Error to indicate Twitter is currently over capacity.
+    """
+    pass
+
+
+class DailyStatusUpdateError(ResponseBotError):
+    """
+    Error to indicate your account reached the daily status update limit.
+    """
+    pass
+
+
+class CharacterLimitError(ResponseBotError):
+    """
+    Error to indicate your tweet reached the character limit.
+    """
+    pass
+
+
 class APIError(ResponseBotError):
     """Generic API error."""
     pass

@@ -17,6 +17,8 @@ from __future__ import absolute_import
 import logging
 
 import sys
+import datetime
+import time
 
 from responsebot.common.exceptions import MissingConfigError, AuthenticationError, APIQuotaError, \
     UserHandlerError, APIError
@@ -47,6 +49,9 @@ class ResponseBot(object):
             logging.error(str(e))
             sys.exit()
 
+        self.error_time_log = {}
+        self.error_sleep_log = {}
+
     def start(self):
         """
         Try to init the main sub-components (:func:`~responsebot.utils.handler_utils.discover_handler_classes`, \
@@ -62,21 +67,41 @@ class ResponseBot(object):
             logging.error(str(e))
             sys.exit()
 
-        try:
-            client = auth_utils.auth(self.config)
-        except (APIQuotaError, AuthenticationError) as e:
-            logging.error(str(e))
-            sys.exit()
+        while True:
+            try:
+                client = auth_utils.auth(self.config)
 
-        try:
-            listener = ResponseBotListener(client=client, handler_classes=handler_classes)
+                listener = ResponseBotListener(client=client, handler_classes=handler_classes)
 
-            stream = ResponseBotStream(client=client, listener=listener)
-            stream.start()
-        except UserHandlerError as e:
-            # TODO: print only stack trace from user exception
-            logging.exception(e)
-            sys.exit()
-        except APIError as e:
-            logging.error(str(e))
+                stream = ResponseBotStream(client=client, listener=listener)
+                stream.start()
+            except (APIQuotaError, AuthenticationError, APIError) as e:
+                self.handle_error(e)
+            except UserHandlerError as e:
+                logging.exception(e)
+                sys.exit()
+            else:
+                break
+
+    def handle_error(self, error):
+        """
+        Try to detect repetitive errors and sleep for a while to avoid being marked as spam
+        """
+        error_desc = str(error)
+        now = datetime.datetime.now()
+        if error_desc not in self.error_time_log:
+            self.error_time_log[error_desc] = now
+            return
+
+        time_of_last_encounter = self.error_time_log[str(error)]
+        time_since_last_encounter = now - time_of_last_encounter
+        if time_since_last_encounter.total_seconds() > self.config.get('min_seconds_between_errors'):
+            self.error_time_log[error_desc] = now
+            return
+
+        if error_desc not in self.error_sleep_log:
+            time.sleep(self.config.get('sleep_seconds_on_consecutive_errors'))
+            self.error_sleep_log[error_desc] = 1
+        else:
+            logging.error(error_desc)
             sys.exit()

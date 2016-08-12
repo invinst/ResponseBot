@@ -32,7 +32,10 @@ class ResponseBotConfig(object):
         """
         :param kwargs: Config from CLI arguments
         """
-        self._config = {}
+        self._config = {
+            'min_seconds_between_errors': 30,
+            'sleep_seconds_on_consecutive_errors': 300
+        }
         self.load_config_file()
         self.load_config_from_cli_arguments(*args, **kwargs)
         self.validate_configs()
@@ -57,6 +60,12 @@ class ResponseBotConfig(object):
         else:
             self._config['user_stream'] = False
 
+        if config_parser.has_option('general', 'min_seconds_between_errors'):
+            self._config['min_seconds_between_errors'] = config_parser.get('general', 'min_seconds_between_errors')
+        if config_parser.has_option('general', 'sleep_seconds_on_consecutive_errors'):
+            self._config['sleep_seconds_on_consecutive_errors'] = config_parser.get(
+                'general', 'sleep_seconds_on_consecutive_errors')
+
     def load_config_from_cli_arguments(self, *args, **kwargs):
         """
         Get config values of passed in CLI options.
@@ -66,6 +75,8 @@ class ResponseBotConfig(object):
         self._load_config_from_cli_argument(key='handlers_package', **kwargs)
         self._load_config_from_cli_argument(key='auth', **kwargs)
         self._load_config_from_cli_argument(key='user_stream', **kwargs)
+        self._load_config_from_cli_argument(key='min_seconds_between_errors', **kwargs)
+        self._load_config_from_cli_argument(key='sleep_seconds_on_consecutive_errors', **kwargs)
 
     def _load_config_from_cli_argument(self, key, **kwargs):
         if kwargs.get(key):

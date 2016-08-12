@@ -77,20 +77,26 @@ class ResponseBotTestCase(TestCase):
     def test_log_auth_error(self, mock_log):
         for exception in [APIQuotaError('message'), AuthenticationError('message')]:
             mock_log.reset_mock()
-            with patch('responsebot.responsebot.ResponseBotConfig'),\
+            with patch('responsebot.responsebot.ResponseBotConfig', return_value={
+                'min_seconds_between_errors': 30, 'sleep_seconds_on_consecutive_errors': 300
+                }),\
                     patch('responsebot.utils.handler_utils.discover_handler_classes', return_value=[MagicMock]),\
-                    patch('responsebot.utils.auth_utils.auth', side_effect=exception):
+                    patch('responsebot.utils.auth_utils.auth', side_effect=exception),\
+                    patch('responsebot.responsebot.time.sleep'):
                 self.assertRaises(SystemExit, ResponseBot().start)
                 mock_log.assert_called_once_with('message')
 
     @patch('logging.error')
     def test_log_stream_api_error(self, mock_log):
         exception = APIError('message')
-        with patch('responsebot.responsebot.ResponseBotConfig'),\
+        with patch('responsebot.responsebot.ResponseBotConfig', return_value={
+                'min_seconds_between_errors': 30, 'sleep_seconds_on_consecutive_errors': 300
+                }),\
                 patch('responsebot.utils.handler_utils.discover_handler_classes', return_value=[MagicMock]),\
                 patch('responsebot.utils.auth_utils.auth'),\
                 patch('responsebot.responsebot.ResponseBotListener'),\
-                patch('responsebot.responsebot.ResponseBotStream', side_effect=exception):
+                patch('responsebot.responsebot.ResponseBotStream', side_effect=exception),\
+                patch('responsebot.responsebot.time.sleep'):
             self.assertRaises(SystemExit, ResponseBot().start)
             mock_log.assert_called_once_with('message')
 

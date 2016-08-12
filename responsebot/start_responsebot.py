@@ -28,6 +28,8 @@ dotenv.load_dotenv('.env')
 @click.option('--handlers-package', help='Path to package containing all your handlers')
 @click.option('--auth', nargs=4, help='Authentication credentials')
 @click.option('--user-stream', is_flag=True, default=False, help='Whether to use Twitter\'s public or user stream')
+@click.option('--min-seconds-between-errors', help='Minimum seconds allowed between two consecutive instance of some error')
+@click.option('--sleep-seconds-on-consecutive-errors', help='Seconds to sleep to avoid spamming')
 def main(*args, **kwargs):
     """Run responsebot"""
     # TODO: validate options
