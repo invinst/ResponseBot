@@ -72,15 +72,24 @@ class ResponseBotClient(object):
         return self._current_user
 
     @api_error_handle
-    def tweet(self, text, in_reply_to=None):
+    def tweet(self, text, in_reply_to=None, filename=None, file=None):
         """
         Post a new tweet.
+
         :param text: the text to post
         :param in_reply_to: The ID of the tweet to reply to
+        :param filename: If `file` param is not provided, read file from this path
+        :param file: A file object, which will be used instead of opening `filename`. `filename` is still required, for
+        MIME type detection and to use as a form field in the POST data
         :raise APIError: if the tweet exceeds Twitter's character limit or the tweet is duplicated
         :return: Tweet object
         """
-        return Tweet(self._client.update_status(status=text, in_reply_to_status_id=in_reply_to)._json)
+
+        if filename is None:
+            return Tweet(self._client.update_status(status=text, in_reply_to_status_id=in_reply_to)._json)
+        else:
+            return Tweet(self._client.update_with_media(filename=filename, file=file,
+                                                        status=text, in_reply_to_status_id=in_reply_to)._json)
 
     def retweet(self, id):
         """
