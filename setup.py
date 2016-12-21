@@ -16,7 +16,7 @@ setup(
     # - MAJOR version when they make incompatible API changes,
     # - MINOR version when they add functionality in a backwards-compatible manner, and
     # - MAINTENANCE version when they make backwards-compatible bug fixes.
-    version='0.3.0',
+    version='0.4.0',
 
     description='Automatically response to any tweets mentioning you',
 

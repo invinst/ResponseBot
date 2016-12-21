@@ -44,6 +44,7 @@ class TweetClientTestCase(TestCase):
         tweet = self.client.tweet('some text')
 
         self.real_client.update_status.assert_called_once_with(status='some text', in_reply_to_status_id=None)
+        self.real_client.update_with_media.assert_not_called()
         self.assertEqual(tweet.some_key, 'some value')
 
     def test_reply(self):
@@ -115,6 +116,50 @@ class TweetClientTestCase(TestCase):
             self.client.tweet,
             text='some text'
         )
+
+    def test_post_new_tweet_with_image_filename(self):
+        self.real_client.update_with_media = MagicMock(return_value=MagicMock(_json={
+            'some_key': 'some value',
+        }))
+
+        tweet = self.client.tweet('some text', filename='img.png')
+
+        self.real_client.update_with_media.assert_called_once_with(filename='img.png',
+                                                                   file=None,
+                                                                   status='some text',
+                                                                   in_reply_to_status_id=None)
+        self.real_client.update_status.assert_not_called()
+        self.assertEqual(tweet.some_key, 'some value')
+
+    def test_post_new_tweet_with_image_filename_and_file(self):
+        self.real_client.update_with_media = MagicMock(return_value=MagicMock(_json={
+            'some_key': 'some value',
+        }))
+
+        mock_file = MagicMock()
+        tweet = self.client.tweet('some text', filename='img.png', file=mock_file)
+
+        self.real_client.update_with_media.assert_called_once_with(filename='img.png',
+                                                                   file=mock_file,
+                                                                   status='some text',
+                                                                   in_reply_to_status_id=None)
+        self.real_client.update_status.assert_not_called()
+        self.assertEqual(tweet.some_key, 'some value')
+
+    def test_post_new_tweet_with_image_file_only(self):
+        """
+        `filename` is still required, so providing only `file` should make it fall back to plaintext tweet without any
+        file uploading.
+        """
+        self.real_client.update_status = MagicMock(return_value=MagicMock(_json={
+            'some_key': 'some value',
+        }))
+
+        tweet = self.client.tweet('some text', file=MagicMock())
+
+        self.real_client.update_status.assert_called_once_with(status='some text', in_reply_to_status_id=None)
+        self.real_client.update_with_media.assert_not_called()
+        self.assertEqual(tweet.some_key, 'some value')
 
     def test_get_tweet(self):
         self.real_client.get_status = MagicMock(return_value=MagicMock(_json={
