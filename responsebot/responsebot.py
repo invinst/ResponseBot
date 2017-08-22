@@ -6,8 +6,7 @@ import sys
 import datetime
 import time
 
-from responsebot.common.exceptions import MissingConfigError, AuthenticationError, APIQuotaError, \
-    UserHandlerError, APIError
+from responsebot.common.exceptions import MissingConfigError, AuthenticationError, APIQuotaError, APIError
 from responsebot.listeners.responsebot_listener import ResponseBotListener
 from responsebot.responsebot_stream import ResponseBotStream
 from responsebot.utils import handler_utils, auth_utils
@@ -63,9 +62,6 @@ class ResponseBot(object):
                 stream.start()
             except (APIQuotaError, AuthenticationError, APIError) as e:
                 self.handle_error(e)
-            except UserHandlerError as e:
-                logging.exception(e)
-                sys.exit()
             else:
                 break
 

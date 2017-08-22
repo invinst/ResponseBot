@@ -14,4 +14,3 @@ responsebot.common.exceptions
       AuthenticationError
       MissingConfigError
       NotFreeToTweetError
-      UserHandlerError

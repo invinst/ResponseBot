@@ -1,6 +1,5 @@
 from unittest.case import TestCase
 
-from responsebot.common.exceptions import UserHandlerError
 from responsebot.listeners.responsebot_listener import ResponseBotListener
 
 try:
@@ -29,20 +28,6 @@ class ResponseBotListenerTestCase(TestCase):
 
         handler_1.on_tweet.assert_called_once_with(tweet)
         handler_2.on_tweet.assert_called_once_with(tweet)
-
-    def test_raise_user_handler_exception(self):
-        handler_class = MagicMock(side_effect=Exception('some error'))
-
-        self.assertRaises(UserHandlerError, ResponseBotListener, handler_classes=[handler_class], client=MagicMock())
-
-    def test_raise_user_handler_exception_on_tweet(self):
-        handler_class = MagicMock()
-        handler_class().on_tweet = MagicMock(side_effect=Exception('some error unknown'))
-        tweet = MagicMock(text='tweet')
-
-        listener = ResponseBotListener(handler_classes=[handler_class], client=MagicMock())
-
-        self.assertRaises(UserHandlerError, listener.on_tweet, tweet=tweet)
 
     def test_handlers_handle_self_tweets(self):
         ignore_own_tweet_handler = MagicMock(catch_self_tweets=False)

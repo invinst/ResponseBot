@@ -1,13 +1,12 @@
 from unittest.case import TestCase
 
-from responsebot.common.exceptions import UserHandlerError
 from responsebot.handlers.base import BaseTweetHandler
 from responsebot.handlers.event import BaseEventHandler
 
 try:
     from mock import MagicMock, patch
 except ImportError:
-    from unittest.mock import MagicMock, patch
+    from unittest.mock import MagicMock
 
 
 class Handler(BaseTweetHandler):
@@ -60,15 +59,10 @@ class BaseTweetHandlerTestCase(TestCase):
 
         self.assertIsNone(handler.event_handler)
 
-    def test_raise_user_handler_error_on_event_handler_init_error(self):
-        client = MagicMock(config={'user_stream': True})
-
-        self.assertRaises(UserHandlerError, HandlerWithErrorneousEventHandler, client=client)
-
     def test_call_event_handler_handle(self):
         client = MagicMock()
         handler = Handler(client)
-        handler.event_handler=MagicMock()
+        handler.event_handler = MagicMock()
         event = MagicMock()
 
         handler.on_event(event)

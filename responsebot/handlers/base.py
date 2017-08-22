@@ -26,10 +26,7 @@ class BaseTweetHandler(object):
         if self.client.config.get('user_stream') and\
                 self.event_handler_class and\
                 issubclass(self.event_handler_class, BaseEventHandler):
-            try:
-                self.event_handler = self.event_handler_class(self.client)
-            except Exception as e:
-                raise UserHandlerError(e)
+            self.event_handler = self.event_handler_class(self.client)
 
     def get_filter(self):
         """
