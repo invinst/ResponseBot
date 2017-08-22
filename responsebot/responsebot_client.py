@@ -1,17 +1,3 @@
-# Copyright 2016 Invisible Institute
-# 
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-# 
-#     http://www.apache.org/licenses/LICENSE-2.0
-# 
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 from __future__ import absolute_import
 
 from decorator import decorate
@@ -167,6 +153,7 @@ class ResponseBotClient(object):
     def unfollow(self, user_id):
         """
         Follow a user.
+
         :param user_id: ID of the user in question
         :return: The user that were unfollowed
         """
@@ -223,8 +210,6 @@ class ResponseBotClient(object):
         """
         List user's lists
 
-        :param cursor: Breaks the results into pages. Provide a value of -1 to begin paging. Provide values as returned
-        to in the response body's next_cursor and previous_cursor attributes to page back and forth in the list.
         :return: list of :class:`~responsebot.models.List` objects
         """
         return [List(tweepy_list_to_json(list)) for list in self._client.lists_all()]
@@ -234,8 +219,6 @@ class ResponseBotClient(object):
         """
         List lists which user was added
 
-        :param cursor: Breaks the results into pages. Provide a value of -1 to begin paging. Provide values as returned
-        to in the response body's next_cursor and previous_cursor attributes to page back and forth in the list.
         :return: list of :class:`~responsebot.models.List` objects
         """
         return [List(tweepy_list_to_json(list)) for list in self._client.lists_memberships()]
@@ -245,8 +228,6 @@ class ResponseBotClient(object):
         """
         List lists which user followed
 
-        :param cursor: Breaks the results into pages. Provide a value of -1 to begin paging. Provide values as returned
-        to in the response body's next_cursor and previous_cursor attributes to page back and forth in the list.
         :return: list of :class:`~responsebot.models.List` objects
         """
         return [List(tweepy_list_to_json(list)) for list in self._client.lists_subscriptions()]
