@@ -1,21 +1,6 @@
-# Copyright 2016 Invisible Institute
-# 
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-# 
-#     http://www.apache.org/licenses/LICENSE-2.0
-# 
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 import logging
 
 from responsebot.common.constants import TWITTER_NON_TWEET_EVENTS
-from responsebot.common.exceptions import UserHandlerError
 from responsebot.models import TweetFilter
 
 
@@ -42,14 +27,10 @@ class ResponseBotListener(object):
         :param handler_classes: List of :class:`~responsebot.handlers.base.BaseTweetHandler`'s derived classes
         """
         for handler_class in handler_classes:
-            try:
-                self.handlers.append(handler_class(client=self.client))
-                logging.info('Successfully registered {handler_class}'.format(
-                    handler_class=getattr(handler_class, '__name__', str(handler_class)))
-                )
-            except Exception as e:
-                # Catch all exception from user handler
-                raise UserHandlerError(user_exception=e)
+            self.handlers.append(handler_class(client=self.client))
+            logging.info('Successfully registered {handler_class}'.format(
+                handler_class=getattr(handler_class, '__name__', str(handler_class)))
+            )
 
     def on_tweet(self, tweet):
         """
@@ -58,8 +39,6 @@ class ResponseBotListener(object):
 
         :param tweet: An object containing a tweet's text and metadata
         :type tweet: :class:`~responsebot.models.Tweet`
-        :raises :class:`~responsebot.common.exceptions.UserHandlerError`: If there is some unknown
-        error from a custom handler
         """
         logging.info(u'Received tweet: `{message}`'.format(message=tweet.text))
 
@@ -70,11 +49,7 @@ class ResponseBotListener(object):
             if not handler.filter.match_tweet(tweet=tweet, user_stream=self.client.config.get('user_stream')):
                 continue
 
-            try:
-                handler.on_tweet(tweet)
-            except Exception as e:
-                # Catch all exception from user handler
-                raise UserHandlerError(user_exception=e)
+            handler.on_tweet(tweet)
 
     def on_event(self, event):
         """
@@ -83,7 +58,6 @@ class ResponseBotListener(object):
 
         :param event: The received event
         :type event: :class:`~responsebot.models.Event`
-        :raises :class:`~responsebot.common.exceptions.UserHandlerError`: If there is some unknown
         error from a custom handler
         """
         if event.event not in TWITTER_NON_TWEET_EVENTS:
@@ -93,11 +67,7 @@ class ResponseBotListener(object):
         logging.info(u'Received event {event}'.format(event=event.event))
 
         for handler in self.handlers:
-            try:
-                handler.on_event(event)
-            except Exception as e:
-                # Catch all exception from user handler
-                raise UserHandlerError(user_exception=e)
+            handler.on_event(event)
 
     def is_self_tweet(self, tweet):
         return self.client.get_current_user().id == tweet.user.id
