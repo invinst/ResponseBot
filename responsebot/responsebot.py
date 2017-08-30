@@ -6,7 +6,9 @@ import sys
 import datetime
 import time
 
-from responsebot.common.exceptions import MissingConfigError, AuthenticationError, APIQuotaError, APIError
+from tweepy.error import TweepError
+
+from responsebot.common.exceptions import MissingConfigError, AuthenticationError, APIQuotaError
 from responsebot.listeners.responsebot_listener import ResponseBotListener
 from responsebot.responsebot_stream import ResponseBotStream
 from responsebot.utils import handler_utils, auth_utils
@@ -44,13 +46,9 @@ class ResponseBot(object):
         """
         logging.info('ResponseBot started')
 
-        try:
-            handler_classes = handler_utils.discover_handler_classes(self.config.get('handlers_package'))
-            if len(handler_classes) == 0:
-                logging.warning('No handler found. Did you forget to extend BaseTweethandler? Check --handlers-module')
-        except ImportError as e:
-            logging.error(str(e))
-            sys.exit()
+        handler_classes = handler_utils.discover_handler_classes(self.config.get('handlers_package'))
+        if len(handler_classes) == 0:
+            logging.warning('No handler found. Did you forget to extend BaseTweethandler? Check --handlers-module')
 
         while True:
             try:
@@ -60,7 +58,7 @@ class ResponseBot(object):
 
                 stream = ResponseBotStream(client=client, listener=listener)
                 stream.start()
-            except (APIQuotaError, AuthenticationError, APIError) as e:
+            except (APIQuotaError, AuthenticationError, TweepError) as e:
                 self.handle_error(e)
             else:
                 break
@@ -69,6 +67,7 @@ class ResponseBot(object):
         """
         Try to detect repetitive errors and sleep for a while to avoid being marked as spam
         """
+        logging.exception("try to sleep if there are repeating errors.")
         error_desc = str(error)
         now = datetime.datetime.now()
         if error_desc not in self.error_time_log:
@@ -85,5 +84,4 @@ class ResponseBot(object):
             time.sleep(self.config.get('sleep_seconds_on_consecutive_errors'))
             self.error_sleep_log[error_desc] = 1
         else:
-            logging.error(error_desc)
             sys.exit()

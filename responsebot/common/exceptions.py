@@ -57,6 +57,13 @@ class CharacterLimitError(ResponseBotError):
     pass
 
 
+class StatusDuplicateError(ResponseBotError):
+    """
+    Error to indicate your status is a duplicate.
+    """
+    pass
+
+
 class APIError(ResponseBotError):
     """Generic API error."""
     pass

@@ -6,8 +6,8 @@ from tweepy.error import TweepError, RateLimitError
 from responsebot.common.constants import TWITTER_TWEET_NOT_FOUND_ERROR, TWITTER_USER_NOT_FOUND_ERROR, \
     TWITTER_PAGE_DOES_NOT_EXISTS_ERROR, TWITTER_DELETE_OTHER_USER_TWEET, TWITTER_ACCOUNT_SUSPENDED_ERROR, \
     TWITTER_USER_IS_NOT_LIST_MEMBER_SUBSCRIBER
-from responsebot.common.exceptions import APIError, APIQuotaError, CharacterLimitError, AutomatedRequestError,\
-    OverCapacityError, DailyStatusUpdateError
+from responsebot.common.exceptions import APIQuotaError, CharacterLimitError, AutomatedRequestError,\
+    OverCapacityError, DailyStatusUpdateError, StatusDuplicateError
 from responsebot.responsebot_client import ResponseBotClient
 
 try:
@@ -83,26 +83,6 @@ class TweetClientTestCase(TestCase):
             text="some text with more than Twitter's character limit"
         )
 
-    def test_post_new_tweet_duplicated(self):
-        self.real_client.update_status = MagicMock(
-            side_effect=TweepError(api_code=187, reason='Status is a duplicate.'))
-
-        self.assertRaises(
-            APIError,
-            self.client.tweet,
-            text='some text'
-        )
-
-    def test_post_new_tweet_unknown_tweet_error(self):
-        self.real_client.update_status = MagicMock(
-            side_effect=TweepError(api_code=-1, reason='Unknown'))
-
-        self.assertRaises(
-            APIError,
-            self.client.tweet,
-            text='some text'
-        )
-
     def test_post_new_tweet_with_image_filename(self):
         self.real_client.update_with_media = MagicMock(return_value=MagicMock(_json={
             'some_key': 'some value',
@@ -168,13 +148,6 @@ class TweetClientTestCase(TestCase):
         self.real_client.get_status.assert_called_once_with(id=123)
         self.assertIsNone(tweet)
 
-    def test_get_tweet_encounter_error(self):
-        self.real_client.get_status = MagicMock(
-            side_effect=TweepError(reason='some reason')
-        )
-
-        self.assertRaises(APIError, self.client.get_tweet, 123)
-
     def test_get_user(self):
         self.real_client.get_user = MagicMock(return_value=MagicMock(_json={
             'some_key': 'some value',
@@ -195,13 +168,6 @@ class TweetClientTestCase(TestCase):
 
         self.real_client.get_user.assert_called_once_with(user_id=123)
         self.assertIsNone(user)
-
-    def test_get_user_encounter_error(self):
-        self.real_client.get_user = MagicMock(
-            side_effect=TweepError(reason='some reason')
-        )
-
-        self.assertRaises(APIError, self.client.get_user, 123)
 
     def test_get_current_user(self):
         self.real_client.me = MagicMock(return_value=MagicMock(_json={
@@ -251,13 +217,6 @@ class TweetClientTestCase(TestCase):
         self.real_client.destroy_status.assert_called_once_with(id=123)
         self.assertFalse(result)
 
-    def test_remove_tweet_encounter_error(self):
-        self.real_client.destroy_status = MagicMock(
-            side_effect=TweepError(reason='some reason')
-        )
-
-        self.assertRaises(APIError, self.client.remove_tweet, 123)
-
     def test_retweet(self):
         self.real_client.retweet = MagicMock()
 
@@ -274,13 +233,6 @@ class TweetClientTestCase(TestCase):
 
         self.real_client.retweet.assert_called_once_with(id=123)
         self.assertFalse(result)
-
-    def test_retweet_encounter_error(self):
-        self.real_client.retweet = MagicMock(
-            side_effect=TweepError(reason='some reason')
-        )
-
-        self.assertRaises(APIError, self.client.retweet, 123)
 
     def test_follow_user(self):
         self.real_client.create_friendship = MagicMock(return_value=MagicMock(_json={'some_key': 'some value'}))
@@ -300,11 +252,6 @@ class TweetClientTestCase(TestCase):
         self.real_client.create_friendship.assert_called_once_with(user_id=123, follow=True)
         self.assertEqual(user.some_key, 'some value')
 
-    def test_follow_user_unknown_exception(self):
-        self.real_client.create_friendship = MagicMock(side_effect=TweepError(reason='unknown'))
-
-        self.assertRaises(APIError, self.client.follow, 123)
-
     def test_unfollow_user(self):
         self.real_client.destroy_friendship = MagicMock(return_value=MagicMock(_json={'some_key': 'some value'}))
 
@@ -312,11 +259,6 @@ class TweetClientTestCase(TestCase):
 
         self.real_client.destroy_friendship.assert_called_once_with(user_id=123)
         self.assertEqual(user.some_key, 'some value')
-
-    def test_unfollow_non_existent_user(self):
-        self.real_client.destroy_friendship = MagicMock(side_effect=TweepError(reason='page not exists', api_code=34))
-
-        self.assertRaises(APIError, self.client.unfollow, 123)
 
     def test_create_list(self):
         api_return = self.check_api_call_success(
@@ -605,9 +547,6 @@ class TweetClientTestCase(TestCase):
                                    mock_api='show_list_subscriber')
 
     def check_api_call_errors(self, api, params, mock_api):
-        setattr(self.real_client, mock_api, MagicMock(side_effect=TweepError(reason='unknown')))
-        self.assertRaises(APIError, getattr(self.client, api), **params)
-
         setattr(self.real_client, mock_api, MagicMock(side_effect=RateLimitError(reason='unknown')))
         self.assertRaises(APIQuotaError, getattr(self.client, api), **params)
 
@@ -623,5 +562,11 @@ class TweetClientTestCase(TestCase):
             getattr(self.real_client, mock_api).assert_called_once_with(**mock_api_params)
 
             return api_return
-        except (APIError, APIQuotaError):
-            self.fail('Expect no API error or API quota error')
+        except (TweepError, APIQuotaError):
+            self.fail('Expect no TweepyError error or API quota error')
+
+    def test_post_duplicate_tweet(self):
+        self.real_client.update_status = MagicMock(
+            side_effect=TweepError(api_code=187, reason='reason'))
+
+        self.assertRaises(StatusDuplicateError, self.client.tweet, text="some text")

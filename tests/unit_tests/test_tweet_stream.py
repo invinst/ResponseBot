@@ -2,7 +2,6 @@ from unittest.case import TestCase
 
 from tweepy.error import TweepError
 
-from responsebot.common.exceptions import APIError
 from responsebot.responsebot_stream import ResponseBotStream
 
 try:
@@ -12,21 +11,13 @@ except ImportError:
 
 
 class TweetStreamTestCase(TestCase):
-    @patch('responsebot.responsebot_stream.tweepy.Stream.filter', side_effect=TweepError(reason='some mild error'))
-    def test_retry_on_non_critical_error(self, mock_stream):
-        mock_client = MagicMock(config=MagicMock(get=MagicMock(return_value=False)))
-        stream = ResponseBotStream(client=mock_client, listener=MagicMock())
-        stream.start(retry_limit=1)
-
-        self.assertEqual(mock_stream.call_count, 2)
-
     def test_terminate_on_critical_error(self):
         exception = TweepError(reason='Stream object already connected!')
         with patch('responsebot.responsebot_stream.tweepy.Stream.filter', side_effect=exception) as mock_stream:
             mock_client = MagicMock(config=MagicMock(get=MagicMock(return_value=False)))
             stream = ResponseBotStream(client=mock_client, listener=MagicMock())
 
-            self.assertRaises(APIError, stream.start)
+            self.assertRaises(TweepError, stream.start)
             self.assertEqual(mock_stream.call_count, 1)
 
     def test_filter_using_merged_filter(self):
@@ -48,6 +39,13 @@ class TweetStreamTestCase(TestCase):
         stream.start(retry_limit=1)
 
         self.assertEqual(mock_stream.call_count, 2)
+
+    @patch('responsebot.responsebot_stream.tweepy.Stream.filter',
+           side_effect=AttributeError('Some error that is not NoneType'))
+    def test_raise_attribute_error(self, mock_stream):
+        mock_client = MagicMock(config=MagicMock(get=MagicMock(return_value=False)))
+        stream = ResponseBotStream(client=mock_client, listener=MagicMock())
+        self.assertRaises(AttributeError, stream.start)
 
     def test_use_user_stream(self):
         mock_client = MagicMock(config=MagicMock(get=MagicMock(return_value=True)))

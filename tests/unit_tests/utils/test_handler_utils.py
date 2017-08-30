@@ -3,9 +3,8 @@ from unittest import TestCase
 from tests.unit_tests.utils.test_handlers import HandlerClassInInit
 from tests.unit_tests.utils.test_handlers.another_handler import AnotherHandlerClass
 
-from responsebot.handlers.base import BaseTweetHandler
-from responsebot.utils.handler_utils import is_handler_class, discover_handler_classes
-from tests.unit_tests.utils.test_handlers.handler import HandlerClass, NonHandlerClass, HandlerClass2
+from responsebot.utils.handler_utils import discover_handler_classes
+from tests.unit_tests.utils.test_handlers.handler import HandlerClass, NonRegisteredHandlerClass, HandlerClass2
 
 
 class DiscoverHandlerClassesTestCase(TestCase):
@@ -18,7 +17,7 @@ class DiscoverHandlerClassesTestCase(TestCase):
         # discover handler class in handler
         self.assertIn(HandlerClass, handler_classes)
         self.assertIn(HandlerClass2, handler_classes)
-        self.assertNotIn(NonHandlerClass, handler_classes)
+        self.assertNotIn(NonRegisteredHandlerClass, handler_classes)
 
         # discover handler class in multiple modules
         self.assertIn(AnotherHandlerClass, handler_classes)
@@ -29,18 +28,4 @@ class DiscoverHandlerClassesTestCase(TestCase):
         # discover handler class in handler
         self.assertIn(HandlerClass, handler_classes)
         self.assertIn(HandlerClass2, handler_classes)
-        self.assertNotIn(NonHandlerClass, handler_classes)
-
-
-class IsHandlerClassTestCase(TestCase):
-    def test_with_handler_class(self):
-        self.assertTrue(is_handler_class(HandlerClass))
-
-    def test_with_non_handler_class(self):
-        self.assertFalse(is_handler_class(NonHandlerClass))
-
-    def test_with_non_class_obj(self):
-        self.assertFalse(is_handler_class({}))
-
-    def test_with_base_class(self):
-        self.assertFalse(is_handler_class(BaseTweetHandler))
+        self.assertNotIn(NonRegisteredHandlerClass, handler_classes)

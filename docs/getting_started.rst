@@ -31,9 +31,10 @@ Create a handler
 
 .. code-block:: python
 
-   from responsebot.handlers.base import BaseTweetHandler
+   from responsebot.handlers import BaseTweetHandler, register_handler
 
 
+   @register_handler
    class MyTweetHandler(BaseTweetHandler):
        def get_filter(self):
            return TweetFilter(track=['Donald Trump'], follow=['<your personal Twitter id>'])

@@ -2,15 +2,13 @@
 Utilities for handling tweet handlers
 """
 from __future__ import absolute_import
-
-import inspect
 import os
 import pkgutil
 
 import sys
 from importlib import import_module
 
-from responsebot.handlers.base import BaseTweetHandler
+from responsebot.handlers import registered_handlers
 
 
 def discover_handler_classes(handlers_package):
@@ -29,28 +27,11 @@ def discover_handler_classes(handlers_package):
     # Add working directory into PYTHONPATH to import developer packages
     sys.path.insert(0, os.getcwd())
 
-    try:
-        package = import_module(handlers_package)
-        handler_classes = [class_obj for _, class_obj in inspect.getmembers(package, is_handler_class)]
+    package = import_module(handlers_package)
 
-        # Continue searching for module if package is not a module
-        if hasattr(package, '__path__'):
-            for _, modname, _ in pkgutil.iter_modules(package.__path__):
-                module = import_module('{package}.{module}'.format(package=package.__name__, module=modname))
+    # Continue searching for module if package is not a module
+    if hasattr(package, '__path__'):
+        for _, modname, _ in pkgutil.iter_modules(package.__path__):
+            import_module('{package}.{module}'.format(package=package.__name__, module=modname))
 
-                handler_classes += [class_obj for _, class_obj in inspect.getmembers(module, is_handler_class)]
-    except ImportError:
-        raise
-
-    return handler_classes
-
-
-def is_handler_class(class_obj):
-    """
-    Check if class_obj extend from BaseTweetHandler.
-
-    :param class_obj: class obj that need to check
-    :type class_obj: Class
-    :return: bool
-    """
-    return inspect.isclass(class_obj) and class_obj is not BaseTweetHandler and issubclass(class_obj, BaseTweetHandler)
+    return registered_handlers

@@ -1,6 +1,8 @@
 from unittest.case import TestCase
 
-from responsebot.common.exceptions import MissingConfigError, APIQuotaError, AuthenticationError, APIError
+from tweepy.error import TweepError
+
+from responsebot.common.exceptions import MissingConfigError, APIQuotaError, AuthenticationError
 
 try:
     from mock import patch, MagicMock
@@ -50,15 +52,7 @@ class ResponseBotTestCase(TestCase):
             mock_log.assert_called_once_with('No handler found. Did you forget to extend BaseTweethandler?'
                                              ' Check --handlers-module')
 
-    @patch('logging.error')
-    def test_log_import_handler_error(self, mock_log):
-        exception = ImportError('message')
-        with patch('responsebot.responsebot.ResponseBotConfig'),\
-                patch('responsebot.utils.handler_utils.discover_handler_classes', side_effect=exception):
-            self.assertRaises(SystemExit, ResponseBot().start)
-            mock_log.assert_called_once_with('message')
-
-    @patch('logging.error')
+    @patch('logging.exception')
     def test_log_auth_error(self, mock_log):
         for exception in [APIQuotaError('message'), AuthenticationError('message')]:
             mock_log.reset_mock()
@@ -69,11 +63,11 @@ class ResponseBotTestCase(TestCase):
                     patch('responsebot.utils.auth_utils.auth', side_effect=exception),\
                     patch('responsebot.responsebot.time.sleep'):
                 self.assertRaises(SystemExit, ResponseBot().start)
-                mock_log.assert_called_once_with('message')
+                mock_log.assert_called_with('try to sleep if there are repeating errors.')
 
-    @patch('logging.error')
+    @patch('logging.exception')
     def test_log_stream_api_error(self, mock_log):
-        exception = APIError('message')
+        exception = TweepError('message')
         with patch('responsebot.responsebot.ResponseBotConfig', return_value={
                 'min_seconds_between_errors': 30, 'sleep_seconds_on_consecutive_errors': 300
                 }),\
@@ -83,4 +77,4 @@ class ResponseBotTestCase(TestCase):
                 patch('responsebot.responsebot.ResponseBotStream', side_effect=exception),\
                 patch('responsebot.responsebot.time.sleep'):
             self.assertRaises(SystemExit, ResponseBot().start)
-            mock_log.assert_called_once_with('message')
+            mock_log.assert_called_with('try to sleep if there are repeating errors.')
