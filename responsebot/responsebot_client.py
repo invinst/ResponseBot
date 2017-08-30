@@ -6,9 +6,10 @@ from tweepy.error import TweepError, RateLimitError
 from responsebot.common.constants import TWITTER_PAGE_DOES_NOT_EXISTS_ERROR, TWITTER_TWEET_NOT_FOUND_ERROR, \
     TWITTER_USER_NOT_FOUND_ERROR, TWITTER_DELETE_OTHER_USER_TWEET, TWITTER_ACCOUNT_SUSPENDED_ERROR,\
     TWITTER_USER_IS_NOT_LIST_MEMBER_SUBSCRIBER, TWITTER_AUTOMATED_REQUEST_ERROR, TWITTER_OVER_CAPACITY_ERROR,\
-    TWITTER_DAILY_STATUS_UPDATE_LIMIT_ERROR, TWITTER_CHARACTER_LIMIT_ERROR_1, TWITTER_CHARACTER_LIMIT_ERROR_2
-from responsebot.common.exceptions import APIError, APIQuotaError, AutomatedRequestError, OverCapacityError,\
-    DailyStatusUpdateError, CharacterLimitError
+    TWITTER_DAILY_STATUS_UPDATE_LIMIT_ERROR, TWITTER_CHARACTER_LIMIT_ERROR_1, TWITTER_CHARACTER_LIMIT_ERROR_2, \
+    TWITTER_STATUS_DUPLICATE_ERROR
+from responsebot.common.exceptions import APIQuotaError, AutomatedRequestError, OverCapacityError,\
+    DailyStatusUpdateError, CharacterLimitError, StatusDuplicateError
 from responsebot.models import Tweet, User, List
 from responsebot.utils.tweepy import tweepy_list_to_json
 
@@ -28,8 +29,10 @@ def api_error_handle(func):
                 raise CharacterLimitError
             elif e.api_code == TWITTER_DAILY_STATUS_UPDATE_LIMIT_ERROR:
                 raise DailyStatusUpdateError
+            elif e.api_code == TWITTER_STATUS_DUPLICATE_ERROR:
+                raise StatusDuplicateError
             else:
-                raise APIError(str(e))
+                raise
 
     return decorate(func, func_wrapper)
 
@@ -67,7 +70,6 @@ class ResponseBotClient(object):
         :param filename: If `file` param is not provided, read file from this path
         :param file: A file object, which will be used instead of opening `filename`. `filename` is still required, for
         MIME type detection and to use as a form field in the POST data
-        :raise APIError: if the tweet exceeds Twitter's character limit or the tweet is duplicated
         :return: Tweet object
         """
 
@@ -90,7 +92,7 @@ class ResponseBotClient(object):
         except TweepError as e:
             if e.api_code == TWITTER_PAGE_DOES_NOT_EXISTS_ERROR:
                 return False
-            raise APIError(str(e))
+            raise
 
     def get_tweet(self, id):
         """
@@ -104,7 +106,7 @@ class ResponseBotClient(object):
         except TweepError as e:
             if e.api_code == TWITTER_TWEET_NOT_FOUND_ERROR:
                 return None
-            raise APIError(str(e))
+            raise
 
     def get_user(self, id):
         """
@@ -118,7 +120,7 @@ class ResponseBotClient(object):
         except TweepError as e:
             if e.api_code == TWITTER_USER_NOT_FOUND_ERROR:
                 return None
-            raise APIError(str(e))
+            raise
 
     def remove_tweet(self, id):
         """
@@ -133,7 +135,7 @@ class ResponseBotClient(object):
         except TweepError as e:
             if e.api_code in [TWITTER_PAGE_DOES_NOT_EXISTS_ERROR, TWITTER_DELETE_OTHER_USER_TWEET]:
                 return False
-            raise APIError(str(e))
+            raise
 
     def follow(self, user_id, notify=False):
         """
@@ -148,7 +150,7 @@ class ResponseBotClient(object):
         except TweepError as e:
             if e.api_code in [TWITTER_ACCOUNT_SUSPENDED_ERROR]:
                 return self.get_user(user_id)
-            raise APIError(str(e))
+            raise
 
     def unfollow(self, user_id):
         """
@@ -157,10 +159,7 @@ class ResponseBotClient(object):
         :param user_id: ID of the user in question
         :return: The user that were unfollowed
         """
-        try:
-            return User(self._client.destroy_friendship(user_id=user_id)._json)
-        except TweepError as e:
-            raise APIError(str(e))
+        return User(self._client.destroy_friendship(user_id=user_id)._json)
 
     ###################################################################################
     # Lists

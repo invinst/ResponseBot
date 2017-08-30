@@ -5,7 +5,6 @@ import logging
 import tweepy
 from tweepy.error import TweepError
 
-from responsebot.common.exceptions import APIError
 from responsebot.listeners.tweepy_wrapper_listener import TweepyWrapperListener
 
 
@@ -28,7 +27,7 @@ class ResponseBotStream(object):
         Try to connect to Twitter's streaming API.
 
         :param retry_limit: The maximum number of retries in case of failures. Default is None (unlimited)
-        :raises :class:`~responsebot.common.exceptions.APIError`: If there's some critical API error
+        :raises :class:`~tweepy.error.TweepyError`: If there's some critical API error
         """
         # Run tweepy stream
         wrapper_listener = TweepyWrapperListener(listener=self.listener)
@@ -47,11 +46,9 @@ class ResponseBotStream(object):
 
                     logging.info('Listening to user stream')
                     stream.userstream(track=self.filter.track)
-            except TweepError as e:
-                if 'Stream object already connected!' in e.reason or \
-                        'Wrong number of locations points' in e.reason:
-                    raise APIError(e.reason)
             except AttributeError as e:
                 # Known Tweepy's issue https://github.com/tweepy/tweepy/issues/576
                 if "'NoneType' object has no attribute 'strip'" in str(e):
                     pass
+                else:
+                    raise
